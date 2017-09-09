@@ -19,6 +19,7 @@ MainWindow::MainWindow(QWidget *parent)
     setWindowTitle("番茄倒计时");
 
 
+
 }
 
 MainWindow::~MainWindow()

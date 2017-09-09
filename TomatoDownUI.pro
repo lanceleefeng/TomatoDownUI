@@ -4,7 +4,9 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
+QT       += core gui sql\
+        winextras
+
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -26,12 +28,24 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += main.cpp\
         mainwindow.cpp \
     testpromote.cpp \
-    lineedit.cpp
+    lineedit.cpp \
+    db.cpp \
+    datetime.cpp \
+    init.cpp \
+    basemodel.cpp \
+    usermodel.cpp \
+    config.cpp
     # lineedit1.cpp \
 
 HEADERS  += mainwindow.h \
     testpromote.h \
-    lineedit.h
+    lineedit.h \
+    db.h \
+    datetime.h \
+    init.h \
+    basemodel.h \
+    usermodel.h \
+    config.h
     # lineedit1.h \
 
 FORMS    += mainwindow.ui \

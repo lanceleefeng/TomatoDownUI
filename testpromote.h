@@ -1,5 +1,5 @@
-#ifndef TESTPROMOTE_H
-#define TESTPROMOTE_H
+#ifndef TEST_PROMOTE_H
+#define TEST_PROMOTE_H
 
 #include <QWidget>
 
@@ -22,4 +22,4 @@ private:
     Ui::TestPromote *ui;
 };
 
-#endif // TESTPROMOTE_H
+#endif // TEST_PROMOTE_H

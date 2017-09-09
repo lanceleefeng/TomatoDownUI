@@ -273,7 +273,7 @@
      <string>隐藏</string>
     </property>
    </widget>
-   <widget class="QWidget" name="">
+   <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
       <x>60</x>
@@ -305,7 +305,7 @@
         </size>
        </property>
        <property name="text">
-        <string>重新开始</string>
+        <string>重新计时</string>
        </property>
       </widget>
      </item>
