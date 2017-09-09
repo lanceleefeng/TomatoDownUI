@@ -1,6 +1,8 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
+#include <QDebug>
+
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
@@ -24,12 +26,15 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::on_pushButton_clicked()
-{
-    
-}
 
-void MainWindow::on_pushButton_4_released()
+void MainWindow::on_pushButton_hide_clicked()
 {
+
+    bool visible = ui->pushButton_restart->isVisible();
     
+    if(visible){
+        ui->pushButton_restart->hide();
+    }else{
+        ui->pushButton_restart->show();
+    }
 }

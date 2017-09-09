@@ -18,9 +18,9 @@ public:
     ~MainWindow();
     
 private slots:
-    void on_pushButton_clicked();
-    
-    void on_pushButton_4_released();
+
+    // 也可以不用自动生成的slots，自定义slots名称，并在MainWindow::MainWindow中手动connect
+    void on_pushButton_hide_clicked();
     
 private:
     Ui::MainWindow *ui;

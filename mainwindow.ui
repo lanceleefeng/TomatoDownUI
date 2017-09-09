@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>500</width>
+    <width>625</width>
     <height>400</height>
    </rect>
   </property>
@@ -14,12 +14,12 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <widget class="QLineEdit" name="lineEdit__breakTime">
+   <widget class="LineEdit" name="lineEdit_breakTime">
     <property name="geometry">
      <rect>
-      <x>120</x>
+      <x>130</x>
       <y>190</y>
-      <width>131</width>
+      <width>100</width>
       <height>20</height>
      </rect>
     </property>
@@ -27,10 +27,10 @@
      <enum>Qt::ClickFocus</enum>
     </property>
    </widget>
-   <widget class="QLabel" name="label_2">
+   <widget class="QLabel" name="label_progress">
     <property name="geometry">
      <rect>
-      <x>120</x>
+      <x>130</x>
       <y>50</y>
       <width>54</width>
       <height>12</height>
@@ -43,7 +43,7 @@
    <widget class="QLabel" name="label_3">
     <property name="geometry">
      <rect>
-      <x>40</x>
+      <x>60</x>
       <y>90</y>
       <width>54</width>
       <height>12</height>
@@ -53,10 +53,10 @@
      <string>到时时间</string>
     </property>
    </widget>
-   <widget class="QLabel" name="label_4">
+   <widget class="QLabel" name="label_endTime">
     <property name="geometry">
      <rect>
-      <x>120</x>
+      <x>130</x>
       <y>90</y>
       <width>54</width>
       <height>12</height>
@@ -69,7 +69,7 @@
    <widget class="QLabel" name="label_5">
     <property name="geometry">
      <rect>
-      <x>40</x>
+      <x>60</x>
       <y>130</y>
       <width>54</width>
       <height>12</height>
@@ -82,7 +82,7 @@
    <widget class="QLabel" name="label_6">
     <property name="geometry">
      <rect>
-      <x>40</x>
+      <x>60</x>
       <y>160</y>
       <width>54</width>
       <height>12</height>
@@ -95,7 +95,7 @@
    <widget class="QLabel" name="label_7">
     <property name="geometry">
      <rect>
-      <x>40</x>
+      <x>60</x>
       <y>190</y>
       <width>54</width>
       <height>12</height>
@@ -105,12 +105,12 @@
      <string>休息时间</string>
     </property>
    </widget>
-   <widget class="QLineEdit" name="lineEdit_time">
+   <widget class="LineEdit" name="lineEdit_time">
     <property name="geometry">
      <rect>
-      <x>120</x>
+      <x>130</x>
       <y>130</y>
-      <width>131</width>
+      <width>100</width>
       <height>20</height>
      </rect>
     </property>
@@ -121,7 +121,7 @@
    <widget class="QLabel" name="label_8">
     <property name="geometry">
      <rect>
-      <x>400</x>
+      <x>360</x>
       <y>40</y>
       <width>54</width>
       <height>12</height>
@@ -134,7 +134,7 @@
    <widget class="QCheckBox" name="checkBox_autoStart">
     <property name="geometry">
      <rect>
-      <x>400</x>
+      <x>360</x>
       <y>70</y>
       <width>71</width>
       <height>16</height>
@@ -150,7 +150,7 @@
    <widget class="QCheckBox" name="checkBox_countDown">
     <property name="geometry">
      <rect>
-      <x>400</x>
+      <x>360</x>
       <y>90</y>
       <width>71</width>
       <height>16</height>
@@ -163,64 +163,12 @@
      <bool>true</bool>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton">
-    <property name="geometry">
-     <rect>
-      <x>40</x>
-      <y>240</y>
-      <width>71</width>
-      <height>23</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>开始</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="pushButton_2">
-    <property name="geometry">
-     <rect>
-      <x>120</x>
-      <y>240</y>
-      <width>75</width>
-      <height>23</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>重新开始</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="pushButton_3">
-    <property name="geometry">
-     <rect>
-      <x>200</x>
-      <y>240</y>
-      <width>75</width>
-      <height>23</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>休息</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="pushButton_4">
-    <property name="geometry">
-     <rect>
-      <x>280</x>
-      <y>240</y>
-      <width>75</width>
-      <height>23</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>暂停</string>
-    </property>
-   </widget>
    <widget class="LineEdit" name="lineEdit_tipTime">
     <property name="geometry">
      <rect>
-      <x>120</x>
+      <x>130</x>
       <y>160</y>
-      <width>131</width>
+      <width>100</width>
       <height>20</height>
      </rect>
     </property>
@@ -231,7 +179,7 @@
    <widget class="QLabel" name="label">
     <property name="geometry">
      <rect>
-      <x>40</x>
+      <x>60</x>
       <y>50</y>
       <width>54</width>
       <height>16</height>
@@ -244,7 +192,7 @@
    <widget class="QLabel" name="label_12">
     <property name="geometry">
      <rect>
-      <x>270</x>
+      <x>240</x>
       <y>130</y>
       <width>54</width>
       <height>12</height>
@@ -257,7 +205,7 @@
    <widget class="QLabel" name="label_13">
     <property name="geometry">
      <rect>
-      <x>270</x>
+      <x>240</x>
       <y>160</y>
       <width>54</width>
       <height>12</height>
@@ -270,7 +218,7 @@
    <widget class="QLabel" name="label_14">
     <property name="geometry">
      <rect>
-      <x>270</x>
+      <x>240</x>
       <y>200</y>
       <width>54</width>
       <height>12</height>
@@ -280,36 +228,10 @@
      <string>分钟</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_5">
-    <property name="geometry">
-     <rect>
-      <x>360</x>
-      <y>240</y>
-      <width>75</width>
-      <height>23</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>继续</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="pushButton_6">
-    <property name="geometry">
-     <rect>
-      <x>440</x>
-      <y>240</y>
-      <width>75</width>
-      <height>23</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>停止</string>
-    </property>
-   </widget>
    <widget class="QCheckBox" name="checkBox_singleWindow">
     <property name="geometry">
      <rect>
-      <x>400</x>
+      <x>360</x>
       <y>110</y>
       <width>81</width>
       <height>16</height>
@@ -325,7 +247,7 @@
    <widget class="QCheckBox" name="checkBox_autoHide">
     <property name="geometry">
      <rect>
-      <x>400</x>
+      <x>360</x>
       <y>130</y>
       <width>71</width>
       <height>16</height>
@@ -337,6 +259,122 @@
     <property name="checked">
      <bool>true</bool>
     </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_hide">
+    <property name="geometry">
+     <rect>
+      <x>390</x>
+      <y>300</y>
+      <width>59</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>隐藏</string>
+    </property>
+   </widget>
+   <widget class="QWidget" name="">
+    <property name="geometry">
+     <rect>
+      <x>60</x>
+      <y>240</y>
+      <width>398</width>
+      <height>25</height>
+     </rect>
+    </property>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="QPushButton" name="pushButton_start">
+       <property name="maximumSize">
+        <size>
+         <width>60</width>
+         <height>16777215</height>
+        </size>
+       </property>
+       <property name="text">
+        <string>开始</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pushButton_restart">
+       <property name="maximumSize">
+        <size>
+         <width>60</width>
+         <height>16777215</height>
+        </size>
+       </property>
+       <property name="text">
+        <string>重新开始</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pushButton_break">
+       <property name="maximumSize">
+        <size>
+         <width>60</width>
+         <height>16777215</height>
+        </size>
+       </property>
+       <property name="text">
+        <string>休息</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pushButton_pause">
+       <property name="maximumSize">
+        <size>
+         <width>60</width>
+         <height>16777215</height>
+        </size>
+       </property>
+       <property name="text">
+        <string>暂停</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pushButton_stop">
+       <property name="maximumSize">
+        <size>
+         <width>60</width>
+         <height>16777215</height>
+        </size>
+       </property>
+       <property name="text">
+        <string>停止</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pushButton_continue">
+       <property name="maximumSize">
+        <size>
+         <width>60</width>
+         <height>16777215</height>
+        </size>
+       </property>
+       <property name="text">
+        <string>继续</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
    </widget>
   </widget>
  </widget>
