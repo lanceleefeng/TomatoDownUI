@@ -1,11 +1,11 @@
-#include "testlineedit.h"
+#include "lineedit.h"
 
-TestLineEdit::TestLineEdit()
+LineEdit::LineEdit()
 {
     
 }
 
-TestLineEdit::TestLineEdit(QWidget *parent)
+LineEdit::LineEdit(QWidget *parent)
     : QLineEdit(parent)
     //: QLineEdit(parent2)
     //: QWidget(parent)
@@ -14,7 +14,7 @@ TestLineEdit::TestLineEdit(QWidget *parent)
 
 }
 
-void TestLineEdit::enterEvent(QEvent *event)
+void LineEdit::enterEvent(QEvent *event)
 {
     this->selectAll();
     this->setFocus();

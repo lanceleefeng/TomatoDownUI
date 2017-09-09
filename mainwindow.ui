@@ -215,7 +215,7 @@
      <string>暂停</string>
     </property>
    </widget>
-   <widget class="TestLineEdit" name="lineEdit_tipTime">
+   <widget class="LineEdit" name="lineEdit_tipTime">
     <property name="geometry">
      <rect>
       <x>120</x>
@@ -338,65 +338,14 @@
      <bool>true</bool>
     </property>
    </widget>
-   <widget class="TestPromote" name="widget_tesPromote" native="true">
-    <property name="geometry">
-     <rect>
-      <x>40</x>
-      <y>290</y>
-      <width>311</width>
-      <height>21</height>
-     </rect>
-    </property>
-   </widget>
-   <widget class="QWidget" name="">
-    <property name="geometry">
-     <rect>
-      <x>51</x>
-      <y>310</y>
-      <width>401</width>
-      <height>31</height>
-     </rect>
-    </property>
-    <layout class="QHBoxLayout" name="horizontalLayout">
-     <item>
-      <widget class="QLabel" name="label_9">
-       <property name="text">
-        <string>TextLabel</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="LineEdit" name="widget" native="true"/>
-     </item>
-     <item>
-      <widget class="QLabel" name="label_10">
-       <property name="text">
-        <string>TextLabel</string>
-       </property>
-      </widget>
-     </item>
-    </layout>
-   </widget>
   </widget>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <customwidgets>
   <customwidget>
-   <class>TestPromote</class>
-   <extends>QWidget</extends>
-   <header location="global">testpromote.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
    <class>LineEdit</class>
-   <extends>QWidget</extends>
-   <header location="global">lineedit.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>TestLineEdit</class>
    <extends>QLineEdit</extends>
-   <header location="global">testlineedit.h</header>
+   <header>lineedit.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

@@ -26,13 +26,13 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += main.cpp\
         mainwindow.cpp \
     testpromote.cpp \
+    lineedit.cpp
     # lineedit1.cpp \
-    testlineedit.cpp
 
 HEADERS  += mainwindow.h \
     testpromote.h \
+    lineedit.h
     # lineedit1.h \
-    testlineedit.h
 
 FORMS    += mainwindow.ui \
     testpromote.ui
