@@ -34,7 +34,9 @@ SOURCES += main.cpp\
     init.cpp \
     basemodel.cpp \
     usermodel.cpp \
-    config.cpp
+    config.cpp \
+    settingmodel.cpp \
+    tools.cpp
     # lineedit1.cpp \
 
 HEADERS  += mainwindow.h \
@@ -45,7 +47,10 @@ HEADERS  += mainwindow.h \
     init.h \
     basemodel.h \
     usermodel.h \
-    config.h
+    config.h \
+    settingmodel.h \
+    basedata.h \
+    tools.h
     # lineedit1.h \
 
 FORMS    += mainwindow.ui \

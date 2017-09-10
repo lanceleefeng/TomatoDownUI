@@ -17,3 +17,27 @@ bool Config::isDebug = true;
 
 */
 
+QString Config::appName = "番茄倒计时";
+
+
+/**
+ * autoStart:           自动开始，启动后是否自动开始计时，默认 true
+ * countDown:           倒计时，true 倒计时，false 正计时, 默认 true
+ * autoHide:            自动隐藏，开始计时后自动隐藏窗口，默认 true
+ * autoHideDelay:       延时，自动隐藏延时指定时间（毫秒），默认 300毫秒
+ * autoHideFirstRun:    首次运行是否隐藏，true 隐藏，false 不隐藏，默认 false
+ * singleWindow:        单窗口，只允许运行一个番茄倒计时窗口，默认 true
+ */
+QMap<QString, QVariant> Config::defaultSetting = {
+    {"autoStart", false},
+    //{"autoStart", true},
+    {"countDown", true},
+    {"autoHide", true},
+    {"autoHideDelay", 300},
+    {"autoHideFirstRun", false},
+    {"singleWindow", true},
+};
+
+
+QString Config::defaultTimerKey = "walking";
+

@@ -17,9 +17,9 @@
    <widget class="LineEdit" name="lineEdit_breakTime">
     <property name="geometry">
      <rect>
-      <x>130</x>
-      <y>190</y>
-      <width>100</width>
+      <x>160</x>
+      <y>225</y>
+      <width>55</width>
       <height>20</height>
      </rect>
     </property>
@@ -30,10 +30,10 @@
    <widget class="QLabel" name="label_progress">
     <property name="geometry">
      <rect>
-      <x>130</x>
+      <x>160</x>
       <y>50</y>
-      <width>54</width>
-      <height>12</height>
+      <width>150</width>
+      <height>16</height>
      </rect>
     </property>
     <property name="text">
@@ -43,7 +43,7 @@
    <widget class="QLabel" name="label_3">
     <property name="geometry">
      <rect>
-      <x>60</x>
+      <x>90</x>
       <y>90</y>
       <width>54</width>
       <height>12</height>
@@ -56,10 +56,10 @@
    <widget class="QLabel" name="label_endTime">
     <property name="geometry">
      <rect>
-      <x>130</x>
+      <x>160</x>
       <y>90</y>
-      <width>54</width>
-      <height>12</height>
+      <width>150</width>
+      <height>16</height>
      </rect>
     </property>
     <property name="text">
@@ -69,8 +69,8 @@
    <widget class="QLabel" name="label_5">
     <property name="geometry">
      <rect>
-      <x>60</x>
-      <y>130</y>
+      <x>90</x>
+      <y>160</y>
       <width>54</width>
       <height>12</height>
      </rect>
@@ -82,8 +82,8 @@
    <widget class="QLabel" name="label_6">
     <property name="geometry">
      <rect>
-      <x>60</x>
-      <y>160</y>
+      <x>90</x>
+      <y>195</y>
       <width>54</width>
       <height>12</height>
      </rect>
@@ -95,8 +95,8 @@
    <widget class="QLabel" name="label_7">
     <property name="geometry">
      <rect>
-      <x>60</x>
-      <y>190</y>
+      <x>90</x>
+      <y>230</y>
       <width>54</width>
       <height>12</height>
      </rect>
@@ -108,9 +108,9 @@
    <widget class="LineEdit" name="lineEdit_time">
     <property name="geometry">
      <rect>
-      <x>130</x>
-      <y>130</y>
-      <width>100</width>
+      <x>160</x>
+      <y>155</y>
+      <width>55</width>
       <height>20</height>
      </rect>
     </property>
@@ -121,7 +121,7 @@
    <widget class="QLabel" name="label_8">
     <property name="geometry">
      <rect>
-      <x>360</x>
+      <x>430</x>
       <y>40</y>
       <width>54</width>
       <height>12</height>
@@ -131,44 +131,12 @@
      <string>设置</string>
     </property>
    </widget>
-   <widget class="QCheckBox" name="checkBox_autoStart">
-    <property name="geometry">
-     <rect>
-      <x>360</x>
-      <y>70</y>
-      <width>71</width>
-      <height>16</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>自动开始</string>
-    </property>
-    <property name="checked">
-     <bool>true</bool>
-    </property>
-   </widget>
-   <widget class="QCheckBox" name="checkBox_countDown">
-    <property name="geometry">
-     <rect>
-      <x>360</x>
-      <y>90</y>
-      <width>71</width>
-      <height>16</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>倒计时</string>
-    </property>
-    <property name="checked">
-     <bool>true</bool>
-    </property>
-   </widget>
    <widget class="LineEdit" name="lineEdit_tipTime">
     <property name="geometry">
      <rect>
-      <x>130</x>
-      <y>160</y>
-      <width>100</width>
+      <x>160</x>
+      <y>190</y>
+      <width>55</width>
       <height>20</height>
      </rect>
     </property>
@@ -179,7 +147,7 @@
    <widget class="QLabel" name="label">
     <property name="geometry">
      <rect>
-      <x>60</x>
+      <x>90</x>
       <y>50</y>
       <width>54</width>
       <height>16</height>
@@ -192,8 +160,8 @@
    <widget class="QLabel" name="label_12">
     <property name="geometry">
      <rect>
-      <x>240</x>
-      <y>130</y>
+      <x>225</x>
+      <y>160</y>
       <width>54</width>
       <height>12</height>
      </rect>
@@ -205,8 +173,8 @@
    <widget class="QLabel" name="label_13">
     <property name="geometry">
      <rect>
-      <x>240</x>
-      <y>160</y>
+      <x>225</x>
+      <y>195</y>
       <width>54</width>
       <height>12</height>
      </rect>
@@ -218,8 +186,8 @@
    <widget class="QLabel" name="label_14">
     <property name="geometry">
      <rect>
-      <x>240</x>
-      <y>200</y>
+      <x>225</x>
+      <y>230</y>
       <width>54</width>
       <height>12</height>
      </rect>
@@ -228,61 +196,16 @@
      <string>分钟</string>
     </property>
    </widget>
-   <widget class="QCheckBox" name="checkBox_singleWindow">
-    <property name="geometry">
-     <rect>
-      <x>360</x>
-      <y>110</y>
-      <width>81</width>
-      <height>16</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>单窗口运行</string>
-    </property>
-    <property name="checked">
-     <bool>true</bool>
-    </property>
-   </widget>
-   <widget class="QCheckBox" name="checkBox_autoHide">
-    <property name="geometry">
-     <rect>
-      <x>360</x>
-      <y>130</y>
-      <width>71</width>
-      <height>16</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>自动隐藏</string>
-    </property>
-    <property name="checked">
-     <bool>true</bool>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="pushButton_hide">
-    <property name="geometry">
-     <rect>
-      <x>390</x>
-      <y>300</y>
-      <width>59</width>
-      <height>23</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>隐藏</string>
-    </property>
-   </widget>
    <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
-      <x>60</x>
-      <y>240</y>
+      <x>90</x>
+      <y>270</y>
       <width>398</width>
       <height>25</height>
      </rect>
     </property>
-    <layout class="QHBoxLayout" name="horizontalLayout">
+    <layout class="QHBoxLayout" name="horizontalLayout_buttons">
      <item>
       <widget class="QPushButton" name="pushButton_start">
        <property name="maximumSize">
@@ -336,19 +259,6 @@
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="pushButton_stop">
-       <property name="maximumSize">
-        <size>
-         <width>60</width>
-         <height>16777215</height>
-        </size>
-       </property>
-       <property name="text">
-        <string>停止</string>
-       </property>
-      </widget>
-     </item>
-     <item>
       <widget class="QPushButton" name="pushButton_continue">
        <property name="maximumSize">
         <size>
@@ -358,6 +268,19 @@
        </property>
        <property name="text">
         <string>继续</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pushButton_stop">
+       <property name="maximumSize">
+        <size>
+         <width>60</width>
+         <height>16777215</height>
+        </size>
+       </property>
+       <property name="text">
+        <string>停止</string>
        </property>
       </widget>
      </item>
@@ -373,6 +296,58 @@
         </size>
        </property>
       </spacer>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QWidget" name="">
+    <property name="geometry">
+     <rect>
+      <x>430</x>
+      <y>70</y>
+      <width>85</width>
+      <height>101</height>
+     </rect>
+    </property>
+    <layout class="QVBoxLayout" name="verticalLayout_settings">
+     <item>
+      <widget class="QCheckBox" name="checkBox_autoStart">
+       <property name="text">
+        <string>自动开始</string>
+       </property>
+       <property name="checked">
+        <bool>false</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QCheckBox" name="checkBox_countDown">
+       <property name="text">
+        <string>倒计时</string>
+       </property>
+       <property name="checked">
+        <bool>false</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QCheckBox" name="checkBox_autoHide">
+       <property name="text">
+        <string>自动隐藏</string>
+       </property>
+       <property name="checked">
+        <bool>false</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QCheckBox" name="checkBox_singleWindow">
+       <property name="text">
+        <string>单窗口运行</string>
+       </property>
+       <property name="checked">
+        <bool>false</bool>
+       </property>
+      </widget>
      </item>
     </layout>
    </widget>

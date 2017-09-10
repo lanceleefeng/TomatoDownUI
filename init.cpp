@@ -23,7 +23,7 @@ Init::Init()
             "id integer PRIMARY KEY AUTOINCREMENT,"
             "uid integer default 0,"
             "auto_start integer default 1,"
-            "countdown integer default 0,"
+            "count_down integer default 0,"
             "created_at text,"
             "updated_at text"
             ")";
@@ -53,8 +53,12 @@ Init::~Init()
 
 }
 
-
+/**
+ * 初始化是否成功
+ * @return bool
+ */
 bool Init::succeed()
 {
+    //return false;
     return m_success;
 }
