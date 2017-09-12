@@ -37,7 +37,7 @@ SOURCES += main.cpp\
     config.cpp \
     settingmodel.cpp \
     tools.cpp
-    # lineedit1.cpp \
+
 
 HEADERS  += mainwindow.h \
     testpromote.h \
@@ -51,7 +51,10 @@ HEADERS  += mainwindow.h \
     settingmodel.h \
     basedata.h \
     tools.h
-    # lineedit1.h \
+
 
 FORMS    += mainwindow.ui \
     testpromote.ui
+
+RC_ICONS=TomatoDown.ico
+

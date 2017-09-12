@@ -9,12 +9,19 @@ class Config
 {
 public:
 
+
+    static bool isDebug;
+
+
     static QString appName;
+    static int width;
+    static int height;
+
     static QMap<QString, QVariant> defaultSetting;
 
     static QString defaultTimerKey;
 
-    static bool isDebug;
+    static int progressMinValue;
 
 
 };

@@ -19,6 +19,8 @@ bool Config::isDebug = true;
 
 QString Config::appName = "番茄倒计时";
 
+int Config::width = 500;
+int Config::height = 350;
 
 /**
  * autoStart:           自动开始，启动后是否自动开始计时，默认 true
@@ -29,11 +31,15 @@ QString Config::appName = "番茄倒计时";
  * singleWindow:        单窗口，只允许运行一个番茄倒计时窗口，默认 true
  */
 QMap<QString, QVariant> Config::defaultSetting = {
-    {"autoStart", false},
-    //{"autoStart", true},
+    //{"autoStart", false},
+    {"autoStart", true},
     {"countDown", true},
     {"autoHide", true},
-    {"autoHideDelay", 300},
+    //{"autoHideDelay", 300},
+    //{"autoHideDelay", 600},
+    //{"autoHideDelay", 1200},
+    //{"autoHideDelay", 1000},
+    {"autoHideDelay", 0},
     {"autoHideFirstRun", false},
     {"singleWindow", true},
 };
@@ -41,3 +47,4 @@ QMap<QString, QVariant> Config::defaultSetting = {
 
 QString Config::defaultTimerKey = "walking";
 
+int Config::progressMinValue = 30;

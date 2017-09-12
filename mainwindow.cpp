@@ -9,6 +9,11 @@
 
 #include <QDebug>
 
+//#include <QIcon>
+//#include <QPixmap>
+//#include <QPainter>
+
+
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
@@ -18,7 +23,30 @@ MainWindow::MainWindow(QWidget *parent)
 
     ui->setupUi(this);
 
+
     setWindowTitle(Config::appName);
+
+    QDesktopWidget *desktop = QApplication::desktop();
+    qDebug() << desktop->width() << "*"<< desktop->height();
+
+    QRect availableRect = desktop->availableGeometry();
+
+    qDebug() << "available: " << availableRect.width() << "*" << availableRect.height();
+
+    int geoX = (availableRect.width() - Config::width)/2;
+    //int geoY = (availableRect.height() - height)/2;
+
+
+    //setGeometry: Unable to set geometry 22x22+400+190 on QWidgetWindow/'TomatoClassWindow'.
+    //Resulting geometry:  128x22+400+190 (frame: 8, 31, 8, 8, custom margin: 0, 0, 0, 0, minimum size: 22x22, maximum size: 16777215x16777215).
+
+    //setGeometry(geoX, 150, 500, 400);
+    //setGeometry(geoX, 200, 500, 400);
+    setGeometry(geoX, 200, Config::width, Config::height);
+    setWindowTitle(tr("番茄倒计时"));
+
+
+
     defaultTimerKey = Config::defaultTimerKey;
 
     ui->lineEdit_time->setText("25");
@@ -53,6 +81,8 @@ MainWindow::MainWindow(QWidget *parent)
     //}
     ui->checkBox_autoStart->setChecked(newSetting["autoStart"].toBool());
     ui->checkBox_countDown->setChecked(newSetting["countDown"].toBool());
+    ui->checkBox_autoHide->setChecked(newSetting["autoHide"].toBool());
+    ui->checkBox_singleWindow->setChecked(newSetting["singleWindow"].toBool());
 
 
     taskbarButton = new QWinTaskbarButton(this);
@@ -91,6 +121,8 @@ void MainWindow::on_pushButton_start_released()
     createTimer(defaultTimerKey);
     timer[defaultTimerKey]->start(1000);
     tick();
+    tickHook();
+
 }
 
 
@@ -114,6 +146,7 @@ void MainWindow::on_pushButton_restart_released()
     timer[defaultTimerKey]->stop();
     timer[defaultTimerKey]->start(1000);
     tick();
+    tickHook();
 
 }
 
@@ -139,6 +172,7 @@ void MainWindow::on_pushButton_break_released()
     timer[defaultTimerKey]->stop();
     timer[defaultTimerKey]->start(1000);
     tick();
+    tickHook();
 }
 
 /**
@@ -167,6 +201,7 @@ void MainWindow::on_pushButton_continue_released()
     ui->label_endTime->setText(row["endTime"].toDateTime().toString(DateTime::defaultFormat));
 
     tick();
+    tickHook();
 }
 
 /**
@@ -202,7 +237,7 @@ void MainWindow::createTimer(QString timerKey)
  */
 void MainWindow::tick()
 {
-    qDebug() << __FUNCTION__ << "...";
+    //qDebug() << __FUNCTION__ << "...";
 
     qint64 seconds = DateTime::getSecondsSince(row["startTime"].toDateTime());
     qint64 remainingSeconds = 0, totalSeconds = 0;
@@ -261,8 +296,7 @@ void MainWindow::tick()
 
                 iconState = remainingSeconds > tipTime*60 ? IconState::Normal : IconState::Stop;
 
-                min = (double)remainingSeconds/60;
-                iconMin = ceil(min);
+                iconMin = ceil((double)remainingSeconds/60);
                 iconSec = remainingSeconds%60;
 
                 titleMin = Tools::paddingZero(remainingSeconds/60);
@@ -270,8 +304,8 @@ void MainWindow::tick()
 
                 progressInfo = QString("%1:%2/%3").arg(titleMin).arg(titleSec).arg(time);
 
-                qDebug() << "iconMin: " << iconMin;
-                qDebug() << "progressInfo: " << progressInfo;
+                //qDebug() << "iconMin: " << iconMin;
+                //qDebug() << "progressInfo: " << progressInfo;
 
                 break;
             case TickState::Break:
@@ -287,11 +321,10 @@ void MainWindow::tick()
 
                 iconState = IconState::Pause;
 
-                min = (double)remainingSeconds/60;
-                iconMin = ceil(min);
+                iconMin = ceil((double)remainingSeconds/60);
                 iconSec = remainingSeconds%60;
 
-                titleMin = Tools::paddingZero(floor(min));
+                titleMin = Tools::paddingZero(remainingSeconds/60);
                 titleSec = Tools::paddingZero(iconSec);
 
                 if(consumedSeconds >= time*60){
@@ -324,11 +357,92 @@ void MainWindow::tick()
         }
     }else{
 
+        remainingSeconds = time*60 - consumedSeconds;
+
+        titleConsumedMin = Tools::paddingZero(seconds/60);
+        titleConsumedSec = Tools::paddingZero(seconds%60);
+
+        switch(tickState){
+
+            case TickState::Count:
+
+                totalSeconds = time*60;
+                seconds += consumedSeconds;
+
+                if(seconds >= totalSeconds){
+                    //setTickState(TickState::Break);
+                    on_pushButton_break_released();
+                    tick();
+                    return;
+                }
+                remainingSeconds = totalSeconds - seconds;
+                progressValue = seconds;
+
+                iconState = remainingSeconds > tipTime*60 ? IconState::Normal : IconState::Stop;
+
+                iconMin = ceil((double)seconds/60);
+                iconSec = seconds%60;
+
+                progressInfo = QString("%1:%2/%3").arg(titleMin).arg(titleSec).arg(time);
+
+                //qDebug() << "iconMin: " << iconMin;
+                //qDebug() << "progressInfo: " << progressInfo;
+
+                break;
+            case TickState::Break:
+                totalSeconds = breakTime*60;
+                remainingSeconds = breakTime*60 - seconds;
+
+                if(seconds >= totalSeconds){
+                    setTickState(TickState::Overtime);
+                    tick();
+                    return;
+                }
+
+                iconState = IconState::Pause;
+
+                iconMin = ceil((double)seconds/60);
+                iconSec = remainingSeconds%60;
+
+                if(consumedSeconds >= time*60){
+                    progressInfo = QString("休息 %1:%2/%3 - %4").arg(titleMin).arg(titleSec).arg(breakTime).arg(time);
+                }else{
+                    progressInfo = QString("休息 %1:%2/%3 - %4:%5/%6").arg(titleMin).arg(titleSec)
+                        .arg(breakTime).arg(titleConsumedMin).arg(titleConsumedSec).arg(time);
+                }
+
+                break;
+            case TickState::Overtime:
+                iconState = IconState::Normal;
+                if(consumedSeconds >= time*60){
+                    progressInfo = QString("超时 %1:%2/%3 - %4").arg(titleMin).arg(titleSec).arg(breakTime).arg(time);
+                }else{
+                    progressInfo = QString("超时 %1:%2/%3 - %4:%5/%6").arg(titleMin).arg(titleSec)
+                        .arg(breakTime).arg(titleConsumedMin).arg(titleConsumedSec).arg(time);
+                }
+
+                break;
+            case TickState::Pause:
+            case TickState::Stop:
+            default:
+                QString strState = tickState == TickState::Pause ? "暂停" : "停止";
+                iconState = IconState::Normal;
+                progressInfo = QString("%1 %2:%3 - %4:%5/%6").arg(strState).arg(titleMin).arg(titleSec)
+                    .arg(titleConsumedMin).arg(titleConsumedSec).arg(time);
+
+                break;
+        }
+
     }
 
 
+    QString windowTitle = QString("%1 - %2").arg(progressInfo).arg(Config::appName);
+    setWindowTitle(windowTitle);
+    ui->label_progress->setText(progressInfo);
 
 
+    setOverlayIcon(iconMin);
+    setTaskbarProgress(iconState, progressValue, totalSeconds);
 
 }
 
@@ -385,6 +499,9 @@ void MainWindow::setControlButtonVisibility()
     }
 }
 
+/**
+ * 收集时间信息
+ */
 void MainWindow::collectTimeInfo()
 {
     row["time"] = ui->lineEdit_time->text();
@@ -393,5 +510,104 @@ void MainWindow::collectTimeInfo()
 }
 
 
+/**
+ * 设置任务栏图标上的覆盖图标（固定大小16*16）
+ * @param min
+ */
+void MainWindow::setOverlayIcon(short min)
+{
+    //qDebug() << "overlay min:" << min;
+    if(min == lastOverlayMin){
+        return;
+    }
+    lastOverlayMin = min;
 
 
+    QPixmap icon(16, 16);
+    icon.fill(Qt::transparent);
+
+    QPainter painter(&icon);
+
+    QFont font("Times", 10, QFont::ExtraBold);
+    painter.setFont(font);
+
+    painter.setPen(Qt::white);
+    //painter.setPen(Qt::green);
+
+    //QString text(min);
+    QString text = QString("%1").arg(min);
+    QRect rect(0, 0, 16, 16);
+    painter.drawText(rect, Qt::AlignCenter, text);
+
+    taskbarButton->setOverlayIcon(QIcon(icon));
+
+}
+
+/**
+ * 设置任务栏图标进度条
+ * @param state
+ * @param value
+ * @param maxValue
+ */
+void MainWindow::setTaskbarProgress(IconState state, qint64 value, qint64 maxValue)
+{
+    value = value >= Config::progressMinValue ? value : Config::progressMinValue;
+
+    switch(state){
+        case IconState::Normal:
+            taskbarProgress->resume();
+            break;
+        case IconState::Pause:
+            taskbarProgress->resume();
+            taskbarProgress->pause();
+            break;
+        case IconState::Stop:
+            taskbarProgress->stop();
+            break;
+        default:
+            taskbarProgress->resume();
+            break;
+    }
+
+    if(maxValue > 0){
+        taskbarProgress->setMaximum(maxValue);
+        taskbarProgress->setValue(value);
+    }else{
+        taskbarProgress->setRange(0, 0);
+    }
+
+}
+
+
+void MainWindow::tickHook()
+{
+    checkAutoHide();
+}
+
+void MainWindow::checkAutoHide()
+{
+    if(newSetting["autoHide"].toBool()){
+        QTimer::singleShot(newSetting["autoHideDelay"].toInt(), this, &MainWindow::setAutoHide);
+    }
+}
+
+void MainWindow::setAutoHide()
+{
+    showMinimized();
+}
+
+void MainWindow::on_checkBox_countDown_released()
+{
+    
+}
+
+void MainWindow::on_checkBox_countDown_clicked(bool checked)
+{
+    newSetting["countDown"] = checked;
+    tick();
+}
+
+void MainWindow::on_checkBox_autoHide_released()
+{
+    newSetting["autoHide"] = ui->checkBox_autoHide->isChecked();
+}

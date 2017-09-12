@@ -31,6 +31,10 @@ int main(int argc, char *argv[])
 
     MainWindow w;
     w.show();
-    
+
+    if(w.newSetting["autoStart"].toBool()){
+        w.on_pushButton_start_released();
+    }
+
     return a.exec();
 }
