@@ -28,7 +28,9 @@ int Config::height = 350;
  * autoHide:            自动隐藏，开始计时后自动隐藏窗口，默认 true
  * autoHideDelay:       延时，自动隐藏延时指定时间（毫秒），默认 300毫秒
  * autoHideFirstRun:    首次运行是否隐藏，true 隐藏，false 不隐藏，默认 false
- * singleWindow:        单窗口，只允许运行一个番茄倒计时窗口，默认 true
+
+ * singleWindow:        单窗口，只允许运行一个番茄倒计时窗口，默认 true，
+ *                      不提供该选项，限制只能运行一个窗口 2017-9-15 23:02:36
  */
 QMap<QString, QVariant> Config::defaultSetting = {
     //{"autoStart", false},
@@ -41,7 +43,7 @@ QMap<QString, QVariant> Config::defaultSetting = {
     //{"autoHideDelay", 1000},
     {"autoHideDelay", 0},
     {"autoHideFirstRun", false},
-    {"singleWindow", true},
+    //{"singleWindow", true},
 };
 
 

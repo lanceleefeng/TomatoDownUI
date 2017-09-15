@@ -82,7 +82,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->checkBox_autoStart->setChecked(newSetting["autoStart"].toBool());
     ui->checkBox_countDown->setChecked(newSetting["countDown"].toBool());
     ui->checkBox_autoHide->setChecked(newSetting["autoHide"].toBool());
-    ui->checkBox_singleWindow->setChecked(newSetting["singleWindow"].toBool());
+    //ui->checkBox_singleWindow->setChecked(newSetting["singleWindow"].toBool());
 
 
     taskbarButton = new QWinTaskbarButton(this);

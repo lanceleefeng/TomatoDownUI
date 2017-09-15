@@ -305,22 +305,6 @@
      </item>
     </layout>
    </widget>
-   <widget class="QCheckBox" name="checkBox_singleWindow">
-    <property name="geometry">
-     <rect>
-      <x>341</x>
-      <y>149</y>
-      <width>83</width>
-      <height>16</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>单窗口运行</string>
-    </property>
-    <property name="checked">
-     <bool>false</bool>
-    </property>
-   </widget>
    <widget class="QCheckBox" name="checkBox_countDown">
     <property name="geometry">
      <rect>
