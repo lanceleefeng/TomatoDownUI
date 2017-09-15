@@ -305,57 +305,69 @@
      </item>
     </layout>
    </widget>
-   <widget class="QWidget" name="layoutWidget">
+   <widget class="QCheckBox" name="checkBox_singleWindow">
     <property name="geometry">
      <rect>
-      <x>340</x>
-      <y>70</y>
-      <width>85</width>
-      <height>101</height>
+      <x>341</x>
+      <y>149</y>
+      <width>83</width>
+      <height>16</height>
      </rect>
     </property>
-    <layout class="QVBoxLayout" name="verticalLayout_settings">
-     <item>
-      <widget class="QCheckBox" name="checkBox_autoStart">
-       <property name="text">
-        <string>自动开始</string>
-       </property>
-       <property name="checked">
-        <bool>false</bool>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QCheckBox" name="checkBox_countDown">
-       <property name="text">
-        <string>倒计时</string>
-       </property>
-       <property name="checked">
-        <bool>false</bool>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QCheckBox" name="checkBox_autoHide">
-       <property name="text">
-        <string>自动隐藏</string>
-       </property>
-       <property name="checked">
-        <bool>false</bool>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QCheckBox" name="checkBox_singleWindow">
-       <property name="text">
-        <string>单窗口运行</string>
-       </property>
-       <property name="checked">
-        <bool>false</bool>
-       </property>
-      </widget>
-     </item>
-    </layout>
+    <property name="text">
+     <string>单窗口运行</string>
+    </property>
+    <property name="checked">
+     <bool>false</bool>
+    </property>
+   </widget>
+   <widget class="QCheckBox" name="checkBox_countDown">
+    <property name="geometry">
+     <rect>
+      <x>341</x>
+      <y>99</y>
+      <width>59</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>倒计时</string>
+    </property>
+    <property name="checked">
+     <bool>false</bool>
+    </property>
+   </widget>
+   <widget class="QCheckBox" name="checkBox_autoHide">
+    <property name="geometry">
+     <rect>
+      <x>341</x>
+      <y>124</y>
+      <width>71</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>自动隐藏</string>
+    </property>
+    <property name="checked">
+     <bool>false</bool>
+    </property>
+   </widget>
+   <widget class="QCheckBox" name="checkBox_autoStart">
+    <property name="geometry">
+     <rect>
+      <x>341</x>
+      <y>74</y>
+      <width>71</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>自动开始</string>
+    </property>
+    <property name="checked">
+     <bool>false</bool>
+    </property>
    </widget>
   </widget>
  </widget>

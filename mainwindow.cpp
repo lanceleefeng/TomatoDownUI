@@ -18,11 +18,12 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
     //, defaultTimerKey("walking")
-    , tickState(TickState::Init)
+    //, tickState(TickState::Init)
 {
 
     ui->setupUi(this);
 
+    tickState = TickState::Init;
 
     setWindowTitle(Config::appName);
 
@@ -37,11 +38,6 @@ MainWindow::MainWindow(QWidget *parent)
     //int geoY = (availableRect.height() - height)/2;
 
 
-    //setGeometry: Unable to set geometry 22x22+400+190 on QWidgetWindow/'TomatoClassWindow'.
-    //Resulting geometry:  128x22+400+190 (frame: 8, 31, 8, 8, custom margin: 0, 0, 0, 0, minimum size: 22x22, maximum size: 16777215x16777215).
-
-    //setGeometry(geoX, 150, 500, 400);
-    //setGeometry(geoX, 200, 500, 400);
     setGeometry(geoX, 200, Config::width, Config::height);
     setWindowTitle(tr("番茄倒计时"));
 
@@ -58,9 +54,13 @@ MainWindow::MainWindow(QWidget *parent)
     SettingModel settingModel;
     QVariantMap setting = settingModel.getOne(QString("uid=%1").arg(UserModel::uid));
 
-    if(setting.isEmpty()){
-        setting = Config::defaultSetting;
-    }
+    //if(setting.isEmpty()){
+    //    setting = Config::defaultSetting;
+    //}
+
+    // todo: 保存数据前使用默认设置
+    setting = Config::defaultSetting;
+
 
     QMap<QString, QVariant>::const_iterator iSetting = Config::defaultSetting.constBegin();
     while(iSetting != Config::defaultSetting.constEnd()){
@@ -315,7 +315,9 @@ void MainWindow::tick()
 
                 if(seconds >= totalSeconds){
                     setTickState(TickState::Overtime);
+                    row["startTime"] = QDateTime::currentDateTime();
                     tick();
+
                     return;
                 }
 
@@ -395,6 +397,7 @@ void MainWindow::tick()
 
                 if(seconds >= totalSeconds){
                     setTickState(TickState::Overtime);
+                    row["startTime"] = QDateTime::currentDateTime();
                     tick();
                     return;
                 }
