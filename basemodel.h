@@ -3,6 +3,7 @@
 #define BASE_MODEL_H
 
 #include "db.h"
+#include "tools.h";
 
 
 class BaseModel
@@ -18,6 +19,19 @@ public:
      * 表名，实例化时加上前缀，使用时是全名
      */
     QString table;
+
+    /**
+     * 表字段信息
+     * 以表名为键保存
+     */
+    static QMap<QString, QMap<QString, int>>tableFields;
+
+    /**
+     * 字段映射
+     * key: 字段，value: 转换后的别名
+     */
+    static QMap<QString, QString> fieldsMap;
+
     /**
      * 表前缀
      */
@@ -35,11 +49,6 @@ public:
      */
     static QString getTable(QString tName, bool full);
 
-    /**
-     * 表字段信息
-     * 以表名为键保存
-     */
-    static QMap<QString, QMap<QString, int>>tableFields;
 
     BaseModel();
 
@@ -78,6 +87,25 @@ public:
      * @param table
      */
     static void setTableFields(QString table);
+
+
+    /**
+     * 一维数据键名转换
+     * @param data
+     * @param keys
+     * @param reverse
+     * @return
+     */
+    static QVariantMap dataTransform(QVariantMap data, QMap<QString, QString> keys, bool reverse = false);
+
+    /**
+     * 二维数据键名转换
+     * @param data
+     * @param keys
+     * @param reverse
+     * @return
+     */
+    static QList<QVariantMap> dataTransform(QList<QVariantMap> data, QMap<QString, QString> keys, bool reverse = false);
 
 
     /**
@@ -160,6 +188,7 @@ public:
      * @return
      */
     QString getWhere(QVariantMap where);
+
 
 };
 

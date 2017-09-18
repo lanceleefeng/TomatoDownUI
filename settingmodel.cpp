@@ -12,6 +12,15 @@
 QString SettingModel::tableName = "settings";
 //bool SettingModel::isFullName = true;
 
+QMap<QString, QString> SettingModel::fieldsMap = {
+    {"auto_start", "autoStart"},
+    {"count_down", "countDown"},
+    {"auto_hide", "autoHide"},
+    {"auto_hide_delay", "autoHideDelay"},
+    {"first_run_hide", "firstRunHide"},
+};
+
+
 /**
  * 构造函数
  */
@@ -25,17 +34,21 @@ SettingModel::~SettingModel()
 {
 }
 
-/**
- * 保存计时方式
- * 1 倒计时，0 正计时
- * @param countDown
- * @return
- */
-bool SettingModel::saveCountMode(int countDown)
+
+QVariantMap SettingModel::getOne(QString where)
 {
-    QVariantMap data;
-    data["countdown"] = countDown > 0 ? 1 : 0;
-    return save(data);
+    QVariantMap data = super::getOne(where);
+    data = BaseModel::dataTransform(data, fieldsMap);
+    return data;
+}
+
+QVariantMap SettingModel::getOne(QVariantMap where)
+{
+    where = BaseModel::dataTransform(where, fieldsMap, true);
+
+    QVariantMap data = super::getOne(where);
+    data = BaseModel::dataTransform(data, fieldsMap);
+    return data;
 }
 
 /**
@@ -57,11 +70,26 @@ bool SettingModel::save(QVariantMap data)
         data["uid"] = uid;
         data["created_at"] = time;
         data["updated_at"] = time;
+
+        // 虽然QMap可以直接打印，但还是有必要再封装一下，输出没有格式，不易读
+        //qDebug() << data;
+        Tools::pf(data);
+
+        //data = BaseModel::dataTransform(data, fieldsMap);
+        data = BaseModel::dataTransform(data, fieldsMap, true);
+        Tools::pf(data);
+
         add(data);
+
     }else{
         qDebug() << "已有数据";
         where["id"] = row["id"];
         data["updated_at"] = time;
+
+        data = BaseModel::dataTransform(data, fieldsMap, true);
+
+        Tools::pf(data);
+
         update(data, where);
     }
 

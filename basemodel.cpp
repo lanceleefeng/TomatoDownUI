@@ -5,11 +5,13 @@
 int BaseModel::uid;
 
 bool BaseModel::isFullName = false;
+
 QString BaseModel::tablePrefix = "ts_";
 
 
-QMap<QString, QMap<QString, int>> BaseModel::tableFields;
+QMap<QString, QString> BaseModel::fieldsMap;
 
+QMap<QString, QMap<QString, int>> BaseModel::tableFields;
 /**
  * 无参构造函数
  */
@@ -246,7 +248,7 @@ QMap<QString, int> BaseModel::getFields(QString tableName)
     //QString table = getTableName();
     //QString table = BaseModel::getTableName();
     QString table = BaseModel::tablePrefix + tableName;
-    qDebug() << "table got in BaseModel: " << table;
+    //qDebug() << "table got in BaseModel: " << table;
 
     return BaseModel::getTableFields(table);
 }
@@ -321,4 +323,32 @@ void BaseModel::setTableFields(QString table)
     tableFields[table] = tableInfo;
 }
 
+QVariantMap BaseModel::dataTransform(QVariantMap data, QMap<QString, QString> keys, bool reverse)
+{
+    QVariantMap res;
+
+    if(reverse){
+        keys = Tools::reverseMap(keys);
+    }
+
+    QMap<QString, QVariant>::const_iterator i = data.constBegin();
+    QString key;
+    QVariant val;
+    while(i != data.constEnd()){
+        key = i.key();
+        val = i.value();
+        //qDebug() << key << ": " << val;
+        key = keys.contains(key) ? keys[key] : key;
+        res[key] = val;
+        ++i;
+    }
+    return res;
+}
+
+
+QList<QVariantMap> BaseModel::dataTransform(QList<QVariantMap> data, QMap<QString, QString> keys, bool reverse)
+{
+
+
+}
 

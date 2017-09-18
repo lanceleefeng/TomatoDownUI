@@ -20,13 +20,16 @@ Init::Init()
     //"YYYY-MM-DD HH:MM:SS.SSS"
     // sqlite 不支持表注释、字段注释
     QString sqlCreateSettingsTable = "create table if not exists ts_settings("
-            "id integer PRIMARY KEY AUTOINCREMENT,"
-            "uid integer default 0,"
-            "auto_start integer default 1,"
-            "count_down integer default 0,"
-            "created_at text,"
-            "updated_at text"
-            ")";
+        "id integer PRIMARY KEY AUTOINCREMENT,"
+        "uid integer default 0,"
+        "auto_start integer default 1,"
+        "count_down integer default 1,"
+        "auto_hide integer default 1,"
+        "auto_hide_delay integer default 0,"
+        "first_run_hide integer default 0,"
+        "created_at text,"
+        "updated_at text"
+        ")";
 
     if(!db.exec(sqlCreateSettingsTable)){
         return;

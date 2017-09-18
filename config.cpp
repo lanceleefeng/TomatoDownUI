@@ -1,6 +1,6 @@
 #include "config.h"
 
-#ifndef QT_NO_DEBUG
+#ifdef QT_NO_DEBUG
 bool Config::isDebug = false;
 #else
 bool Config::isDebug = true;
@@ -42,7 +42,7 @@ QMap<QString, QVariant> Config::defaultSetting = {
     //{"autoHideDelay", 1200},
     //{"autoHideDelay", 1000},
     {"autoHideDelay", 0},
-    {"autoHideFirstRun", false},
+    {"firstRunHide", false},
     //{"singleWindow", true},
 };
 
@@ -50,3 +50,8 @@ QMap<QString, QVariant> Config::defaultSetting = {
 QString Config::defaultTimerKey = "walking";
 
 int Config::progressMinValue = 30;
+
+QMap<QString, int> Config::delayedTime = {
+    {"saveSetting", 500},
+};
+

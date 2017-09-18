@@ -27,7 +27,7 @@ int main(int argc, char *argv[])
 
 
     UserModel::uid = uid;
-    //BaseModel::uid = uid;
+    BaseModel::uid = uid;
 
     MainWindow w;
     w.show();

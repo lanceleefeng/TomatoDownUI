@@ -23,16 +23,33 @@ MainWindow::MainWindow(QWidget *parent)
 
     ui->setupUi(this);
 
+    SettingModel settingModel;
+    QVariantMap setting = settingModel.getOne(QString("uid=%1").arg(UserModel::uid));
+
+    Tools::pf(setting);
+    //Tools::pf("默认值：");
+    qDebug() << "默认值:";
+    Tools::pf(Config::defaultSetting);
+
+    if(setting.isEmpty()){
+        setting = Config::defaultSetting;
+    }
+
+    //setting = Config::defaultSetting;
+
+    newSetting = setting;
+    oldSetting = setting;
+
+
     tickState = TickState::Init;
 
     setWindowTitle(Config::appName);
 
     QDesktopWidget *desktop = QApplication::desktop();
-    qDebug() << desktop->width() << "*"<< desktop->height();
-
     QRect availableRect = desktop->availableGeometry();
 
-    qDebug() << "available: " << availableRect.width() << "*" << availableRect.height();
+    //qDebug() << desktop->width() << "*"<< desktop->height();
+    //qDebug() << "available: " << availableRect.width() << "*" << availableRect.height();
 
     int geoX = (availableRect.width() - Config::width)/2;
     //int geoY = (availableRect.height() - height)/2;
@@ -50,31 +67,6 @@ MainWindow::MainWindow(QWidget *parent)
     ui->lineEdit_breakTime->setText("5");
 
     setControlButtonVisibility();
-
-    SettingModel settingModel;
-    QVariantMap setting = settingModel.getOne(QString("uid=%1").arg(UserModel::uid));
-
-    //if(setting.isEmpty()){
-    //    setting = Config::defaultSetting;
-    //}
-
-    // todo: 保存数据前使用默认设置
-    setting = Config::defaultSetting;
-
-
-    QMap<QString, QVariant>::const_iterator iSetting = Config::defaultSetting.constBegin();
-    while(iSetting != Config::defaultSetting.constEnd()){
-        qDebug() << iSetting.key() << iSetting.value();
-        //QString sKey = iSetting.key();
-        //QVariant sVal = iSetting.value();
-        //newSetting[sKey] = sVal;
-        //oldSetting[sKey] = sVal;
-
-        ++iSetting;
-    }
-
-    newSetting = setting;
-    oldSetting = setting;
 
     //if(newSetting["autoStart"].toBool()){
     //    ui->checkBox_autoStart->setChecked(true);
@@ -599,18 +591,68 @@ void MainWindow::setAutoHide()
     showMinimized();
 }
 
-void MainWindow::on_checkBox_countDown_released()
+
+void MainWindow::on_checkBox_autoStart_clicked(bool checked)
 {
-    
+    newSetting["autoStart"] = checked;
+    beginSaveSetting();
 }
 
+// released不如clicked可靠：按下并拖动离开对象，clicked不会触发，但released会触发！
 void MainWindow::on_checkBox_countDown_clicked(bool checked)
 {
+    qDebug() << __FUNCTION__ << checked;
     newSetting["countDown"] = checked;
     tick();
+
+    beginSaveSetting();
+
 }
 
+/*
 void MainWindow::on_checkBox_autoHide_released()
 {
+    //QCheckBox *checkBox = (QCheckBox *)sender();
+    //newSetting["autoHide"] = checkBox->isChecked();
     newSetting["autoHide"] = ui->checkBox_autoHide->isChecked();
+    beginSaveSetting();
 }
+*/
+
+
+void MainWindow::on_checkBox_autoHide_clicked(bool checked)
+{
+    //QCheckBox *checkBox = (QCheckBox *)sender();
+    //newSetting["autoHide"] = checkBox->isChecked();
+    //newSetting["autoHide"] = ui->checkBox_autoHide->isChecked();
+    newSetting["autoHide"] = checked;
+    beginSaveSetting();
+}
+
+void MainWindow::beginSaveSetting()
+{
+    if(delayedActions[keySaveSetting]){
+        return;
+    }
+    delayedActions[keySaveSetting] = true;
+
+    int time = Config::delayedTime[keySaveSetting];
+    QTimer::singleShot(time, this, &MainWindow::endSaveSetting);
+
+}
+
+void MainWindow::endSaveSetting()
+{
+    delayedActions[keySaveSetting] = false;
+
+    if(newSetting == oldSetting){
+        qDebug() << "新值与旧值相同，不保存";
+        return;
+    }
+
+    SettingModel settingModel;
+    settingModel.save(newSetting);
+
+    oldSetting = newSetting;
+}
+

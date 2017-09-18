@@ -4,9 +4,12 @@
 #include "basedata.h"
 #include "lineedit.h"
 #include "tools.h"
+#include "settingmodel.h"
+
 
 #include <QMainWindow>
 #include <QDesktopWidget>
+#include <QCheckBox>
 
 #include <QTimer>
 
@@ -45,8 +48,16 @@ public:
     QMap<QString, QTimer *> timer;
     void createTimer(QString timerKey);
 
+    QMap<QString, bool> delayedActions;
+    QString keySaveSetting = "saveSetting";
+
     QMap<QString, QVariant> newSetting;
     QMap<QString, QVariant> oldSetting;
+
+
+
+    void beginSaveSetting();
+
 
     IconState iconState;
     TickState tickState;
@@ -64,6 +75,8 @@ public:
 
     void tickHook();
     void checkAutoHide();
+
+
 
 public slots:
 
@@ -85,18 +98,15 @@ private slots:
     
     void on_pushButton_continue_released();
 
-
-
-    void on_checkBox_countDown_released();
-    
+    void on_checkBox_autoStart_clicked(bool checked);
     void on_checkBox_countDown_clicked(bool checked);
-
-
-    void on_checkBox_autoHide_released();
+    void on_checkBox_autoHide_clicked(bool checked);
 
     void setAutoHide();
 
-    
+    void endSaveSetting();
+
+
 private:
     Ui::MainWindow *ui;
 

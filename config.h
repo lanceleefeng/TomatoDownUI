@@ -23,6 +23,7 @@ public:
 
     static int progressMinValue;
 
+    static QMap<QString, int> delayedTime;
 
 };
 

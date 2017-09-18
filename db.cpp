@@ -12,6 +12,7 @@
 
 
 #include "db.h"
+#include "config.h"
 
 // 实现DB单例模式，但Instance方法在cpp文件中实现一直报错
 // 最终采用了混合实现：
@@ -55,17 +56,16 @@ void DB::setConn(QString connectionName)
 
     QString dbPath;
     dbPath = QCoreApplication::applicationDirPath();
-    //dbPath = "E:";
 
-    //QString dbName = "test.db";
-    //QString dbName = "setttings.db";
-    QString dbName = "../setttings.db";
+    QString dbName = "setttings.db";
+    //QString dbName = "../setttings.db";
 
+    if(Config::isDebug){
+        dbPath = dbPath + "/..";
+    }
     QString dbFullPath = dbPath + "/" + dbName;
 
-
     //qDebug() << "db path: " << dbFullPath;
-    //qDebug() << __FUNCTION__;
 
     if(connectionName.size() == 0){
         //db.conn = QSqlDatabase::addDatabase(driver);

@@ -1,7 +1,9 @@
 #ifndef SETTING_MODEL_H
 #define SETTING_MODEL_H
 
+
 #include "datetime.h"
+#include "tools.h"
 #include "db.h"
 
 #include "basemodel.h"
@@ -37,15 +39,17 @@ public:
 
     //bool add(QVariantMap data);
 
+    static QMap<QString, QString> fieldsMap;
+
 
     /**
-     * 保存计时方式
-     * 1 倒计时，0 正计时
-     * @param countDown
+     * 查询一条数据
+     * @param where
      * @return
      */
-    bool saveCountMode(int countDown);
 
+    QVariantMap getOne(QString where);
+    QVariantMap getOne(QVariantMap where);
 
     /**
      * 保存设置
@@ -54,6 +58,8 @@ public:
      * @return
      */
     bool save(QVariantMap data);
+
+
 };
 
 #endif // SETTING_MODEL_H
