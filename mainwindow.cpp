@@ -3,9 +3,9 @@
 
 
 #include "config.h"
-#include "datetime.h"
 #include "usermodel.h"
-#include "settingmodel.h"
+//#include "datetime.h"
+//#include "settingmodel.h"
 
 #include <QDebug>
 
@@ -26,10 +26,10 @@ MainWindow::MainWindow(QWidget *parent)
     SettingModel settingModel;
     QVariantMap setting = settingModel.getOne(QString("uid=%1").arg(UserModel::uid));
 
-    Tools::pf(setting);
+    //Tools::pf(setting);
     //Tools::pf("默认值：");
-    qDebug() << "默认值:";
-    Tools::pf(Config::defaultSetting);
+    //qDebug() << "默认值:";
+    //Tools::pf(Config::defaultSetting);
 
     if(setting.isEmpty()){
         setting = Config::defaultSetting;
@@ -100,7 +100,6 @@ void MainWindow::on_pushButton_start_released()
     //tickState = TickState::Count;
     setTickState(TickState::Count);
 
-    taskbarButton->setWindow(this->windowHandle());
 
     collectTimeInfo();
 
@@ -111,6 +110,8 @@ void MainWindow::on_pushButton_start_released()
     ui->label_endTime->setText(row["endTime"].toDateTime().toString(DateTime::defaultFormat));
 
     createTimer(defaultTimerKey);
+    taskbarButton->setWindow(this->windowHandle());
+
     timer[defaultTimerKey]->start(1000);
     tick();
     tickHook();
@@ -134,7 +135,7 @@ void MainWindow::on_pushButton_restart_released()
     row["endTime"] = row["startTime"].toDateTime().addSecs(row["time"].toInt()*60);
     ui->label_endTime->setText(row["endTime"].toDateTime().toString(DateTime::defaultFormat));
 
-    createTimer(defaultTimerKey);
+    //createTimer(defaultTimerKey);
     timer[defaultTimerKey]->stop();
     timer[defaultTimerKey]->start(1000);
     tick();
@@ -160,7 +161,11 @@ void MainWindow::on_pushButton_break_released()
     row["endTime"] = row["startTime"].toDateTime().addSecs(row["breakTime"].toInt()*60);
     ui->label_endTime->setText(row["endTime"].toDateTime().toString(DateTime::defaultFormat));
 
+    //qDebug() << taskbarButton->window();
     createTimer(defaultTimerKey);
+    taskbarButton->setWindow(this->windowHandle());
+
+
     timer[defaultTimerKey]->stop();
     timer[defaultTimerKey]->start(1000);
     tick();
