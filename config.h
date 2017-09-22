@@ -17,6 +17,8 @@ public:
     static int width;
     static int height;
 
+    //static QString defaultLanguage;
+
     static QMap<QString, QVariant> defaultSetting;
 
     static QString defaultTimerKey;

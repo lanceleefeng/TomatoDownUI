@@ -56,7 +56,8 @@ MainWindow::MainWindow(QWidget *parent)
 
 
     setGeometry(geoX, 200, Config::width, Config::height);
-    setWindowTitle(tr("番茄倒计时"));
+    //setWindowTitle(tr("番茄倒计时"));
+    setWindowTitle(tr("TomatoDown"));
 
 
 
@@ -634,6 +635,54 @@ void MainWindow::on_checkBox_autoHide_clicked(bool checked)
     beginSaveSetting();
 }
 
+
+void MainWindow::on_pushButton_switchLanguage_clicked()
+{
+    language = language == "zh_cn" ? "en_us" : "zh_cn";
+    QString languageFile = language + ".qm";
+
+    // 语言文件与图片一样，要作为资源文件引入！2017-9-22 1:11:01
+    //QString path = QCoreApplication::applicationDirPath();
+    QString path = ":/languages";
+    languageFile = path + "/" + languageFile;
+    qDebug() << "language: " << languageFile;
+
+
+    //QTranslator translator;
+    //bool res = app->installTranslator(&translator);
+
+    app->installTranslator(translator);
+    bool res = translator->load(languageFile);
+    app->installTranslator(translator);
+
+    if(!res){
+        qDebug() << "引入翻译文件失败";
+    }
+
+    //ui->retranslateUi();
+    
+    //retranslateUi(this);
+    
+
+    
+    //ui->label_settings->setText(tr("Settings"));
+    //ui->label_settings->setText(tr("设置"));
+    //ui->checkBox_autoHide->setText(tr("自动隐藏"));
+    
+    //ui->label_settings->retranslateUi();
+    //ui->checkBox_autoHide->retranslateUi();
+    
+    //setWindowTitle(tr("番茄倒计时"));
+
+
+    this->ui->retranslateUi(this); // 可用
+    //ui->label_settings->setText(tr("设置")); // 可用
+    setWindowTitle(tr("TomatoDown")); // 可用
+
+    
+}
+
+
 void MainWindow::beginSaveSetting()
 {
     if(delayedActions[keySaveSetting]){
@@ -660,4 +709,3 @@ void MainWindow::endSaveSetting()
 
     oldSetting = newSetting;
 }
-

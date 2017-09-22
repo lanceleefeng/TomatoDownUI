@@ -7,6 +7,12 @@
 #include "settingmodel.h"
 
 
+#include <QtGui>
+#include <QTranslator>
+
+#include <QApplication>
+
+
 #include <QMainWindow>
 #include <QDesktopWidget>
 #include <QCheckBox>
@@ -77,6 +83,11 @@ public:
     void checkAutoHide();
 
 
+    QString language;
+    //QApplication app;
+    QApplication *app;
+    QTranslator *translator;
+
 
 public slots:
 
@@ -102,11 +113,15 @@ private slots:
     void on_checkBox_countDown_clicked(bool checked);
     void on_checkBox_autoHide_clicked(bool checked);
 
+    void on_pushButton_switchLanguage_clicked();
+    
     void setAutoHide();
 
     void endSaveSetting();
 
 
+    
+    
 private:
     Ui::MainWindow *ui;
 

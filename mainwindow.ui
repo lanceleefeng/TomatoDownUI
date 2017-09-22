@@ -124,7 +124,7 @@
      <enum>Qt::ClickFocus</enum>
     </property>
    </widget>
-   <widget class="QLabel" name="label_8">
+   <widget class="QLabel" name="label_settings">
     <property name="geometry">
      <rect>
       <x>340</x>
@@ -207,7 +207,7 @@
      <rect>
       <x>80</x>
       <y>270</y>
-      <width>321</width>
+      <width>398</width>
       <height>25</height>
      </rect>
     </property>
@@ -310,7 +310,7 @@
      <rect>
       <x>341</x>
       <y>99</y>
-      <width>59</width>
+      <width>80</width>
       <height>16</height>
      </rect>
     </property>
@@ -326,7 +326,7 @@
      <rect>
       <x>341</x>
       <y>124</y>
-      <width>71</width>
+      <width>80</width>
       <height>16</height>
      </rect>
     </property>
@@ -342,7 +342,7 @@
      <rect>
       <x>341</x>
       <y>74</y>
-      <width>71</width>
+      <width>80</width>
       <height>16</height>
      </rect>
     </property>
@@ -351,6 +351,44 @@
     </property>
     <property name="checked">
      <bool>false</bool>
+    </property>
+   </widget>
+   <widget class="QComboBox" name="comboBox_language">
+    <property name="geometry">
+     <rect>
+      <x>340</x>
+      <y>150</y>
+      <width>91</width>
+      <height>22</height>
+     </rect>
+    </property>
+    <item>
+     <property name="text">
+      <string>中文（简体）</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>中文（繁體）</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>English</string>
+     </property>
+    </item>
+   </widget>
+   <widget class="QPushButton" name="pushButton_switchLanguage">
+    <property name="geometry">
+     <rect>
+      <x>340</x>
+      <y>190</y>
+      <width>75</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>中英切换</string>
     </property>
    </widget>
   </widget>

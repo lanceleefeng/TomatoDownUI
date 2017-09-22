@@ -33,6 +33,9 @@ int Config::height = 350;
  *                      不提供该选项，限制只能运行一个窗口 2017-9-15 23:02:36
  */
 QMap<QString, QVariant> Config::defaultSetting = {
+
+    {"language", "zh_cn"},
+
     //{"autoStart", false},
     {"autoStart", true},
     {"countDown", true},
