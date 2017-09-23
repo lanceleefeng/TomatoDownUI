@@ -81,7 +81,7 @@ public:
 
     void tickHook();
     void checkAutoHide();
-
+    void setEndAtText(QDateTime time);
 
     QString language;
     //QApplication app;

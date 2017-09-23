@@ -43,7 +43,10 @@ MainWindow::MainWindow(QWidget *parent)
 
     tickState = TickState::Init;
 
-    setWindowTitle(Config::appName);
+    //setWindowTitle(tr("番茄倒计时")); // 可用
+    setWindowTitle(tr("TomatoDown")); // 可用
+    //setWindowTitle(Config::appName); // 可用
+
 
     QDesktopWidget *desktop = QApplication::desktop();
     QRect availableRect = desktop->availableGeometry();
@@ -56,8 +59,7 @@ MainWindow::MainWindow(QWidget *parent)
 
 
     setGeometry(geoX, 200, Config::width, Config::height);
-    //setWindowTitle(tr("番茄倒计时"));
-    setWindowTitle(tr("TomatoDown"));
+
 
 
 
@@ -77,6 +79,9 @@ MainWindow::MainWindow(QWidget *parent)
     ui->checkBox_autoHide->setChecked(newSetting["autoHide"].toBool());
     //ui->checkBox_singleWindow->setChecked(newSetting["singleWindow"].toBool());
 
+
+    ui->label_progress->setText("-");
+    ui->label_endAt->setText("-");
 
     taskbarButton = new QWinTaskbarButton(this);
     taskbarProgress = taskbarButton->progress();
@@ -101,14 +106,14 @@ void MainWindow::on_pushButton_start_released()
     //tickState = TickState::Count;
     setTickState(TickState::Count);
 
-
     collectTimeInfo();
 
     row["startTime"] = QDateTime::currentDateTime();
     //row["endTime"] = DateTime::timeOffset(row["startTime"].toDateTime(), row["time"].toInt()*60);
     row["endTime"] = row["startTime"].toDateTime().addSecs(row["time"].toInt()*60);
 
-    ui->label_endTime->setText(row["endTime"].toDateTime().toString(DateTime::defaultFormat));
+    //ui->label_endAt->setText(row["endTime"].toDateTime().toString(DateTime::defaultFormat));
+    setEndAtText(row["endTime"].toDateTime());
 
     createTimer(defaultTimerKey);
     taskbarButton->setWindow(this->windowHandle());
@@ -134,7 +139,7 @@ void MainWindow::on_pushButton_restart_released()
 
     row["startTime"] = QDateTime::currentDateTime();
     row["endTime"] = row["startTime"].toDateTime().addSecs(row["time"].toInt()*60);
-    ui->label_endTime->setText(row["endTime"].toDateTime().toString(DateTime::defaultFormat));
+    setEndAtText(row["endTime"].toDateTime());
 
     //createTimer(defaultTimerKey);
     timer[defaultTimerKey]->stop();
@@ -160,7 +165,7 @@ void MainWindow::on_pushButton_break_released()
 
     row["startTime"] = QDateTime::currentDateTime();
     row["endTime"] = row["startTime"].toDateTime().addSecs(row["breakTime"].toInt()*60);
-    ui->label_endTime->setText(row["endTime"].toDateTime().toString(DateTime::defaultFormat));
+    setEndAtText(row["endTime"].toDateTime());
 
     //qDebug() << taskbarButton->window();
     createTimer(defaultTimerKey);
@@ -196,7 +201,7 @@ void MainWindow::on_pushButton_continue_released()
     row["startTime"] = QDateTime::currentDateTime();
 
     row["endTime"] = row["startTime"].toDateTime().addSecs(row["time"].toInt()*60 - timeConsumed[defaultTimerKey]);
-    ui->label_endTime->setText(row["endTime"].toDateTime().toString(DateTime::defaultFormat));
+    setEndAtText(row["endTime"].toDateTime());
 
     tick();
     tickHook();
@@ -212,7 +217,7 @@ void MainWindow::on_pushButton_stop_released()
     }
     setTickState(TickState::Stop);
     row["startTime"] = QDateTime::currentDateTime();
-    ui->label_endTime->setText("-");
+    ui->label_endAt->setText("-");
 
     tick();
 }
@@ -248,6 +253,7 @@ void MainWindow::tick()
     qint64 breakTime = row["breakTime"].toInt();
 
     double min;
+    QString statusText;
 
 
     QString progressInfo;
@@ -327,28 +333,36 @@ void MainWindow::tick()
                 titleMin = Tools::paddingZero(remainingSeconds/60);
                 titleSec = Tools::paddingZero(iconSec);
 
+
+                statusText = tr("Break");
                 if(consumedSeconds >= time*60){
-                    progressInfo = QString("休息 %1:%2/%3 - %4").arg(titleMin).arg(titleSec).arg(breakTime).arg(time);
+                    //progressInfo = QString("休息 %1:%2/%3 - %4").arg(titleMin).arg(titleSec).arg(breakTime).arg(time);
+                    progressInfo = QString(" %1:%2/%3 - %4").arg(titleMin).arg(titleSec).arg(breakTime).arg(time);
                 }else{
-                    progressInfo = QString("休息 %1:%2/%3 - %4:%5/%6").arg(titleMin).arg(titleSec)
+                    progressInfo = QString(" %1:%2/%3 - %4:%5/%6").arg(titleMin).arg(titleSec)
                         .arg(breakTime).arg(titleConsumedMin).arg(titleConsumedSec).arg(time);
                 }
+                progressInfo = statusText + progressInfo;
 
                 break;
             case TickState::Overtime:
                 iconState = IconState::Normal;
+                statusText = tr("Overtime");
                 if(consumedSeconds >= time*60){
-                    progressInfo = QString("超时 %1:%2/%3 - %4").arg(titleMin).arg(titleSec).arg(breakTime).arg(time);
+                    progressInfo = QString(" %1:%2/%3 - %4").arg(titleMin).arg(titleSec).arg(breakTime).arg(time);
                 }else{
-                    progressInfo = QString("超时 %1:%2/%3 - %4:%5/%6").arg(titleMin).arg(titleSec)
+                    progressInfo = QString(" %1:%2/%3 - %4:%5/%6").arg(titleMin).arg(titleSec)
                         .arg(breakTime).arg(titleConsumedMin).arg(titleConsumedSec).arg(time);
                 }
-
+                progressInfo = statusText + progressInfo;
                 break;
             case TickState::Pause:
             case TickState::Stop:
             default:
-                QString strState = tickState == TickState::Pause ? "暂停" : "停止";
+                statusText = tr("Pause");
+                QString statusText2 = tr("Stop");
+                QString strState = tickState == TickState::Pause ? statusText : statusText2;
+
                 iconState = IconState::Normal;
                 progressInfo = QString("%1 %2:%3 - %4:%5/%6").arg(strState).arg(titleMin).arg(titleSec)
                     .arg(titleConsumedMin).arg(titleConsumedSec).arg(time);
@@ -405,28 +419,36 @@ void MainWindow::tick()
                 iconMin = ceil((double)seconds/60);
                 iconSec = remainingSeconds%60;
 
+                statusText = tr("Break");
                 if(consumedSeconds >= time*60){
-                    progressInfo = QString("休息 %1:%2/%3 - %4").arg(titleMin).arg(titleSec).arg(breakTime).arg(time);
+                    progressInfo = QString(" %1:%2/%3 - %4").arg(titleMin).arg(titleSec).arg(breakTime).arg(time);
                 }else{
-                    progressInfo = QString("休息 %1:%2/%3 - %4:%5/%6").arg(titleMin).arg(titleSec)
+                    progressInfo = QString(" %1:%2/%3 - %4:%5/%6").arg(titleMin).arg(titleSec)
                         .arg(breakTime).arg(titleConsumedMin).arg(titleConsumedSec).arg(time);
                 }
+                progressInfo = statusText + progressInfo;
 
                 break;
             case TickState::Overtime:
                 iconState = IconState::Normal;
+
+                statusText = tr("Overtime");
                 if(consumedSeconds >= time*60){
-                    progressInfo = QString("超时 %1:%2/%3 - %4").arg(titleMin).arg(titleSec).arg(breakTime).arg(time);
+                    progressInfo = QString(" %1:%2/%3 - %4").arg(titleMin).arg(titleSec).arg(breakTime).arg(time);
                 }else{
-                    progressInfo = QString("超时 %1:%2/%3 - %4:%5/%6").arg(titleMin).arg(titleSec)
+                    progressInfo = QString(" %1:%2/%3 - %4:%5/%6").arg(titleMin).arg(titleSec)
                         .arg(breakTime).arg(titleConsumedMin).arg(titleConsumedSec).arg(time);
                 }
+                progressInfo = statusText + progressInfo;
 
                 break;
             case TickState::Pause:
             case TickState::Stop:
             default:
-                QString strState = tickState == TickState::Pause ? "暂停" : "停止";
+                statusText = tr("Pause");
+                QString statusText2 = tr("Stop");
+                QString strState = tickState == TickState::Pause ? statusText : statusText2;
+
                 iconState = IconState::Normal;
                 progressInfo = QString("%1 %2:%3 - %4:%5/%6").arg(strState).arg(titleMin).arg(titleSec)
                     .arg(titleConsumedMin).arg(titleConsumedSec).arg(time);
@@ -437,7 +459,8 @@ void MainWindow::tick()
     }
 
 
-    QString windowTitle = QString("%1 - %2").arg(progressInfo).arg(Config::appName);
+    //QString windowTitle = QString("%1 - %2").arg(progressInfo).arg(Config::appName);
+    QString windowTitle = QString("%1 - %2").arg(progressInfo).arg(tr("appName"));
     setWindowTitle(windowTitle);
     ui->label_progress->setText(progressInfo);
 
@@ -597,6 +620,10 @@ void MainWindow::setAutoHide()
     showMinimized();
 }
 
+void MainWindow::setEndAtText(QDateTime time)
+{
+    ui->label_endAt->setText(time.toString(DateTime::defaultFormat));
+}
 
 void MainWindow::on_checkBox_autoStart_clicked(bool checked)
 {
@@ -663,8 +690,6 @@ void MainWindow::on_pushButton_switchLanguage_clicked()
     
     //retranslateUi(this);
     
-
-    
     //ui->label_settings->setText(tr("Settings"));
     //ui->label_settings->setText(tr("设置"));
     //ui->checkBox_autoHide->setText(tr("自动隐藏"));
@@ -674,12 +699,15 @@ void MainWindow::on_pushButton_switchLanguage_clicked()
     
     //setWindowTitle(tr("番茄倒计时"));
 
-
     this->ui->retranslateUi(this); // 可用
     //ui->label_settings->setText(tr("设置")); // 可用
-    setWindowTitle(tr("TomatoDown")); // 可用
 
-    
+    //计时中会设置标题
+    //setWindowTitle(tr("TomatoDown")); // 可用
+    tick();
+    setEndAtText(row["endTime"].toDateTime());
+
+
 }
 
 
