@@ -12,6 +12,9 @@
 QString SettingModel::tableName = "settings";
 //bool SettingModel::isFullName = true;
 
+QVariantMap SettingModel::setting;
+QVariantMap SettingModel::oldSetting;
+
 QMap<QString, QString> SettingModel::fieldsMap = {
     {"auto_start", "autoStart"},
     {"count_down", "countDown"},
@@ -97,3 +100,40 @@ bool SettingModel::save(QVariantMap data)
     return true;
 }
 
+
+
+QVariantMap SettingModel::getSetting()
+{
+    if(setting.isEmpty()){
+        setSetting();
+    }
+    return setting;
+}
+
+/**
+ * 初始化时调用，从数据库和默认配置获取
+ */
+void SettingModel::setSetting()
+{
+    SettingModel model;
+    QVariantMap where;
+    where["uid"] = BaseModel::uid;
+
+    setting = model.getOne(where);
+    qDebug() << "数据库中的设置：";
+    Tools::pf(setting);
+
+    if(setting.isEmpty()){
+        setting = Config::defaultSetting;
+    }
+}
+
+/**
+ * 由数据更新设置
+ * 初始化后由交互操作调用
+ * @param data
+ */
+void SettingModel::setSetting(QVariantMap data)
+{
+    setting = data;
+}

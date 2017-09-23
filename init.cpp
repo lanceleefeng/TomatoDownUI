@@ -22,6 +22,7 @@ Init::Init()
     QString sqlCreateSettingsTable = "create table if not exists ts_settings("
         "id integer PRIMARY KEY AUTOINCREMENT,"
         "uid integer default 0,"
+        "language text,"
         "auto_start integer default 1,"
         "count_down integer default 1,"
         "auto_hide integer default 1,"

@@ -20,8 +20,11 @@ public:
     static int width;
     static int height;
 
-    //static QString defaultLanguage;
+    //static QMap<QString, QString> languages;
+    static QStringList languages;
+    static QStringList languageNames;
 
+    //static QString defaultLanguage;
     static QMap<QString, QVariant> defaultSetting;
 
     static QString defaultTimerKey;

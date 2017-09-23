@@ -23,22 +23,13 @@ MainWindow::MainWindow(QWidget *parent)
 
     ui->setupUi(this);
 
-    SettingModel settingModel;
-    QVariantMap setting = settingModel.getOne(QString("uid=%1").arg(UserModel::uid));
+    newSetting = SettingModel::setting;
+    oldSetting = SettingModel::setting;
 
-    //Tools::pf(setting);
-    //Tools::pf("默认值：");
-    //qDebug() << "默认值:";
-    //Tools::pf(Config::defaultSetting);
-
-    if(setting.isEmpty()){
-        setting = Config::defaultSetting;
+    int size = Config::languages.size();
+    for(int i=0; i < size; ++i){
+        qDebug() << i << Config::languages.at(i) << Config::languageNames.at(i);
     }
-
-    //setting = Config::defaultSetting;
-
-    newSetting = setting;
-    oldSetting = setting;
 
 
     tickState = TickState::Init;
@@ -79,9 +70,24 @@ MainWindow::MainWindow(QWidget *parent)
     ui->checkBox_autoHide->setChecked(newSetting["autoHide"].toBool());
     //ui->checkBox_singleWindow->setChecked(newSetting["singleWindow"].toBool());
 
+    //ui->label_progress->setText("-");
+    //ui->label_endAt->setText("-");
 
-    ui->label_progress->setText("-");
-    ui->label_endAt->setText("-");
+    
+    // 会触发currentIndexChanged！
+    // 禁用再启用仍然触发了
+
+    //ui->comboBox_language->setDisabled(true);
+    ui->comboBox_language->insertItems(0, Config::languageNames);
+    //ui->comboBox_language->setDisabled(false);
+
+    ui->comboBox_language->setCurrentIndex(Config::languages.indexOf(newSetting["language"].toString()));
+
+
+    // 初始化语言不能在构造函数中：
+    // 需要使用app对象，而初始化时app对象并没有赋值
+    //on_comboBox_language_activated(1);
+
 
     taskbarButton = new QWinTaskbarButton(this);
     taskbarProgress = taskbarButton->progress();
@@ -663,54 +669,51 @@ void MainWindow::on_checkBox_autoHide_clicked(bool checked)
 }
 
 
-void MainWindow::on_pushButton_switchLanguage_clicked()
+// 会触发currentIndexChanged！
+// 禁用再启用仍然触发了
+void MainWindow::on_comboBox_language_activated(int index)
+//void MainWindow::on_comboBox_language_currentIndexChanged(int index)
 {
-    language = language == "zh_cn" ? "en_us" : "zh_cn";
-    QString languageFile = language + ".qm";
+    qDebug() << "Switch language: " << index << Config::languages.at(index);
 
-    // 语言文件与图片一样，要作为资源文件引入！2017-9-22 1:11:01
-    //QString path = QCoreApplication::applicationDirPath();
-    QString path = ":/languages";
-    languageFile = path + "/" + languageFile;
-    qDebug() << "language: " << languageFile;
+    newSetting["language"] = Config::languages.at(index);
+    beginSaveSetting();
+    switchLanguage();
+}
 
+void MainWindow::switchLanguage()
+{
+    language = newSetting["language"].toString();
 
-    //QTranslator translator;
-    //bool res = app->installTranslator(&translator);
+    Tools::switchLanguage(language);
+    refreshUi();
 
-    app->installTranslator(translator);
-    bool res = translator->load(languageFile);
-    app->installTranslator(translator);
+}
 
-    if(!res){
-        qDebug() << "引入翻译文件失败";
+void MainWindow::refreshUi()
+{
+
+    if(!initiated){
+        return;
     }
 
-    //ui->retranslateUi();
-    
-    //retranslateUi(this);
-    
-    //ui->label_settings->setText(tr("Settings"));
-    //ui->label_settings->setText(tr("设置"));
-    //ui->checkBox_autoHide->setText(tr("自动隐藏"));
-    
-    //ui->label_settings->retranslateUi();
-    //ui->checkBox_autoHide->retranslateUi();
-    
-    //setWindowTitle(tr("番茄倒计时"));
-
     this->ui->retranslateUi(this); // 可用
-    //ui->label_settings->setText(tr("设置")); // 可用
 
     //计时中会设置标题
     //setWindowTitle(tr("TomatoDown")); // 可用
-    tick();
-    setEndAtText(row["endTime"].toDateTime());
-
+    if(tickState != TickState::Init){
+        tick();
+        setEndAtText(row["endTime"].toDateTime());
+    }
 
 }
 
 
+/**
+ *
+ * 延时保存
+ *
+ */
 void MainWindow::beginSaveSetting()
 {
     if(delayedActions[keySaveSetting]){

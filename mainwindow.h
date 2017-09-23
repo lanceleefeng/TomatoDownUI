@@ -85,9 +85,11 @@ public:
 
     QString language;
     //QApplication app;
-    QApplication *app;
-    QTranslator *translator;
+    //QApplication *app;
+    //QTranslator *translator;
 
+    void switchLanguage();
+    void refreshUi();
 
 public slots:
 
@@ -113,8 +115,9 @@ private slots:
     void on_checkBox_countDown_clicked(bool checked);
     void on_checkBox_autoHide_clicked(bool checked);
 
-    void on_pushButton_switchLanguage_clicked();
-    
+    void on_comboBox_language_activated(int index);
+    //void on_comboBox_language_currentIndexChanged(int index);
+
     void setAutoHide();
 
     void endSaveSetting();
@@ -122,6 +125,7 @@ private slots:
 
     
     
+
 private:
     Ui::MainWindow *ui;
 

@@ -1,6 +1,26 @@
 #include "tools.h"
 
 
+QApplication * Tools::app;
+QTranslator * Tools::translator;
+
+//void Tools::switchLanguage(QString language, QApplication *app, QTranslator *translator)
+void Tools::switchLanguage(QString language)
+{
+    QString path = ":/languages";
+    QString languageFile = path + "/" + language + ".qm";
+
+    bool res = translator->load(languageFile);
+
+    if(!res){
+        qDebug() << "引入翻译文件失败:" << languageFile;
+        return;
+    }
+    app->installTranslator(translator);
+
+}
+
+
 QMap<QString, QString> Tools::reverseMap(QMap<QString, QString> map)
 {
     if(map.isEmpty()){

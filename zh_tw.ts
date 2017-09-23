@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="zh_CN" sourcelanguage="en">
+<TS version="2.1" language="zh_TW" sourcelanguage="en">
 <context>
     <name>MainWindow</name>
     <message>
         <location filename="mainwindow.ui" line="20"/>
         <source>MainWindow</source>
-        <translation>番茄倒计时</translation>
+        <translation>番茄倒計時</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="46"/>
@@ -17,49 +17,49 @@
     <message>
         <location filename="mainwindow.ui" line="59"/>
         <source>End at</source>
-        <translation>结束时间</translation>
+        <translation>結束時間</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="85"/>
         <source>Time</source>
-        <translation>时间</translation>
+        <translation>時間</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="98"/>
         <source>Tip Time</source>
-        <translation>提示时间</translation>
+        <translation>提示時間</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="111"/>
         <source>Break Time</source>
-        <translation>休息时间</translation>
+        <translation>休息時間</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="137"/>
         <source>Settings</source>
-        <translation>设置</translation>
+        <translation>設置</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="163"/>
         <source>Progress</source>
-        <translation>进度</translation>
+        <translation>進度</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="176"/>
         <location filename="mainwindow.ui" line="189"/>
         <location filename="mainwindow.ui" line="202"/>
         <source>min</source>
-        <translation>分钟</translation>
+        <translation>分鐘</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="224"/>
         <source>Start</source>
-        <translation>开始</translation>
+        <translation>開始</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="237"/>
         <source>Restart</source>
-        <translation>重新计时</translation>
+        <translation>重新計時</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="250"/>
@@ -73,12 +73,12 @@
         <location filename="mainwindow.cpp" line="362"/>
         <location filename="mainwindow.cpp" line="448"/>
         <source>Pause</source>
-        <translation>暂停</translation>
+        <translation>暫停</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="289"/>
         <source>Continue</source>
-        <translation>继续</translation>
+        <translation>繼續</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="302"/>
@@ -90,18 +90,17 @@
     <message>
         <location filename="mainwindow.ui" line="318"/>
         <source>Count Down</source>
-        <translatorcomment>勾选表示倒计时，不勾选则是正计时</translatorcomment>
-        <translation>倒计时</translation>
+        <translation>倒計時</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="334"/>
         <source>Auto Hide</source>
-        <translation>自动隐藏</translation>
+        <translation>自動隱藏</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="350"/>
         <source>Auto Start</source>
-        <translation>自动开始</translation>
+        <translation>自動開始</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="367"/>
@@ -126,18 +125,18 @@
     <message>
         <location filename="mainwindow.cpp" line="47"/>
         <source>TomatoDown</source>
-        <translation>番茄倒计时</translation>
+        <translation>番茄倒計時</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="350"/>
         <location filename="mainwindow.cpp" line="435"/>
         <source>Overtime</source>
-        <translation>超时</translation>
+        <translation>超時</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="463"/>
         <source>appName</source>
-        <translation>番茄倒计时</translation>
+        <translation>番茄倒計時</translation>
     </message>
 </context>
 <context>

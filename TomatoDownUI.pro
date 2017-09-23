@@ -56,8 +56,10 @@ HEADERS  += mainwindow.h \
 FORMS    += mainwindow.ui \
     testpromote.ui
 
-TRANSLATIONS += zh_cn.ts \
-                en_us.ts
+TRANSLATIONS += en_us.ts \
+                zh_cn.ts \
+                zh_tw.ts
+
 
 
 RC_ICONS=TomatoDown.ico

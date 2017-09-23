@@ -65,7 +65,7 @@ void DB::setConn(QString connectionName)
     }
     QString dbFullPath = dbPath + "/" + dbName;
 
-    //qDebug() << "db path: " << dbFullPath;
+    qDebug() << "db path: " << dbFullPath;
 
     if(connectionName.size() == 0){
         //db.conn = QSqlDatabase::addDatabase(driver);

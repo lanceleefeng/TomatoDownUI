@@ -4,6 +4,7 @@
 
 #include "datetime.h"
 #include "tools.h"
+#include "config.h"
 #include "db.h"
 
 #include "basemodel.h"
@@ -24,6 +25,9 @@ public:
      */
     static QString tableName;
     //static bool isFullName;
+
+    static QVariantMap setting;
+    static QVariantMap oldSetting;
 
     // 不搞什么时间戳设置，手动加
     //bool timestamp = true;
@@ -59,6 +63,9 @@ public:
      */
     bool save(QVariantMap data);
 
+    static QVariantMap getSetting();
+    static void setSetting();
+    static void setSetting(QVariantMap data);
 
 };
 
