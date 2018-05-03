@@ -5,6 +5,8 @@
 
 class LineEdit : public QLineEdit
 {
+//Q_OBJECT
+
 public:
     LineEdit();
     LineEdit(QWidget *parent = Q_NULLPTR);

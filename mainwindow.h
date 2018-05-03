@@ -42,6 +42,8 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
+    void keyPressEvent(QKeyEvent *event);
+    //bool eventFilter(QObject *obj, QEvent *event);
 
     bool initiated = false;
 
@@ -57,10 +59,9 @@ public:
     QMap<QString, bool> delayedActions;
     QString keySaveSetting = "saveSetting";
 
-    QMap<QString, QVariant> newSetting;
-    QMap<QString, QVariant> oldSetting;
-
-
+    //新旧设置分别改为SettingModel::setting、SettingModel::oldSetting
+    //QMap<QString, QVariant> newSetting;
+    //QMap<QString, QVariant> oldSetting;
 
     void beginSaveSetting();
 
@@ -91,15 +92,22 @@ public:
     void switchLanguage();
     void refreshUi();
 
+protected:
+
 public slots:
 
     void tick();
 
     void on_pushButton_start_released();
 
+    //void on_lineEdit_time_returnPressed();
+    void on_lineEdit_tipTime_returnPressed();
+    void on_lineEdit_breakTime_returnPressed();
+
 private slots:
 
     // 也可以不用自动生成的slots，自定义slots名称，并在MainWindow::MainWindow中手动connect
+
 
     void on_pushButton_restart_released();
     
@@ -125,7 +133,7 @@ private slots:
 
     
     
-
+    
 private:
     Ui::MainWindow *ui;
 

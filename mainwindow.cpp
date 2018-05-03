@@ -23,8 +23,14 @@ MainWindow::MainWindow(QWidget *parent)
 
     ui->setupUi(this);
 
-    newSetting = SettingModel::setting;
-    oldSetting = SettingModel::setting;
+    //QVariantMap *setting2 = & SettingModel::setting;
+    //qDebug() << "QVariantMap 指针：" << setting2->operator[]("language");
+
+    //newSetting = SettingModel::getSetting();
+    //oldSetting = SettingModel::getSetting();
+
+    SettingModel::SettingModel::oldSetting = SettingModel::getSetting();
+
 
     int size = Config::languages.size();
     for(int i=0; i < size; ++i){
@@ -56,19 +62,21 @@ MainWindow::MainWindow(QWidget *parent)
 
     defaultTimerKey = Config::defaultTimerKey;
 
+
+
     ui->lineEdit_time->setText("25");
     ui->lineEdit_tipTime->setText("3");
     ui->lineEdit_breakTime->setText("5");
 
+
+    //QObject::connect(ui->lineEdit_time, &QLineEdit::returnPressed, );
+
     setControlButtonVisibility();
 
-    //if(newSetting["autoStart"].toBool()){
-    //    ui->checkBox_autoStart->setChecked(true);
-    //}
-    ui->checkBox_autoStart->setChecked(newSetting["autoStart"].toBool());
-    ui->checkBox_countDown->setChecked(newSetting["countDown"].toBool());
-    ui->checkBox_autoHide->setChecked(newSetting["autoHide"].toBool());
-    //ui->checkBox_singleWindow->setChecked(newSetting["singleWindow"].toBool());
+    ui->checkBox_autoStart->setChecked(SettingModel::setting["autoStart"].toBool());
+    ui->checkBox_countDown->setChecked(SettingModel::setting["countDown"].toBool());
+    ui->checkBox_autoHide->setChecked(SettingModel::setting["autoHide"].toBool());
+    //ui->checkBox_singleWindow->setChecked(SettingModel::setting["singleWindow"].toBool());
 
     //ui->label_progress->setText("-");
     //ui->label_endAt->setText("-");
@@ -81,7 +89,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->comboBox_language->insertItems(0, Config::languageNames);
     //ui->comboBox_language->setDisabled(false);
 
-    ui->comboBox_language->setCurrentIndex(Config::languages.indexOf(newSetting["language"].toString()));
+    ui->comboBox_language->setCurrentIndex(Config::languages.indexOf(SettingModel::setting["language"].toString()));
 
 
     // 初始化语言不能在构造函数中：
@@ -102,6 +110,28 @@ MainWindow::~MainWindow()
 {
     delete ui;
 }
+
+
+void MainWindow::keyPressEvent(QKeyEvent *event)
+{
+
+    // 按下enter键时，是否有输入框获得焦点
+
+    if(event->key() == Qt::Key_Return || event->key() == Qt::Key_Enter){
+        //if(ui->lineEdit_breakTime->hasEditFocus()){
+        if(ui->lineEdit_breakTime->hasFocus()){
+            on_pushButton_break_released();
+        }else{
+            if(tickState == TickState::Init){
+                on_pushButton_start_released();
+            }else{
+                on_pushButton_restart_released();
+            }
+        }
+    }
+
+}
+
 
 /**
  * 开始按钮
@@ -280,7 +310,7 @@ void MainWindow::tick()
     titleMin = Tools::paddingZero(iconMin);
     titleSec = Tools::paddingZero(iconSec);
 
-    if(newSetting["countDown"].toBool()){
+    if(SettingModel::setting["countDown"].toBool()){
 
         remainingSeconds = time*60 - consumedSeconds;
 
@@ -616,8 +646,8 @@ void MainWindow::tickHook()
 
 void MainWindow::checkAutoHide()
 {
-    if(newSetting["autoHide"].toBool()){
-        QTimer::singleShot(newSetting["autoHideDelay"].toInt(), this, &MainWindow::setAutoHide);
+    if(SettingModel::setting["autoHide"].toBool()){
+        QTimer::singleShot(SettingModel::setting["autoHideDelay"].toInt(), this, &MainWindow::setAutoHide);
     }
 }
 
@@ -633,15 +663,17 @@ void MainWindow::setEndAtText(QDateTime time)
 
 void MainWindow::on_checkBox_autoStart_clicked(bool checked)
 {
-    newSetting["autoStart"] = checked;
+    SettingModel::setting["autoStart"] = checked;
     beginSaveSetting();
 }
+
+
 
 // released不如clicked可靠：按下并拖动离开对象，clicked不会触发，但released会触发！
 void MainWindow::on_checkBox_countDown_clicked(bool checked)
 {
     qDebug() << __FUNCTION__ << checked;
-    newSetting["countDown"] = checked;
+    SettingModel::setting["countDown"] = checked;
     tick();
 
     beginSaveSetting();
@@ -652,8 +684,8 @@ void MainWindow::on_checkBox_countDown_clicked(bool checked)
 void MainWindow::on_checkBox_autoHide_released()
 {
     //QCheckBox *checkBox = (QCheckBox *)sender();
-    //newSetting["autoHide"] = checkBox->isChecked();
-    newSetting["autoHide"] = ui->checkBox_autoHide->isChecked();
+    //SettingModel::setting["autoHide"] = checkBox->isChecked();
+    SettingModel::setting["autoHide"] = ui->checkBox_autoHide->isChecked();
     beginSaveSetting();
 }
 */
@@ -662,9 +694,9 @@ void MainWindow::on_checkBox_autoHide_released()
 void MainWindow::on_checkBox_autoHide_clicked(bool checked)
 {
     //QCheckBox *checkBox = (QCheckBox *)sender();
-    //newSetting["autoHide"] = checkBox->isChecked();
-    //newSetting["autoHide"] = ui->checkBox_autoHide->isChecked();
-    newSetting["autoHide"] = checked;
+    //SettingModel::setting["autoHide"] = checkBox->isChecked();
+    //SettingModel::setting["autoHide"] = ui->checkBox_autoHide->isChecked();
+    SettingModel::setting["autoHide"] = checked;
     beginSaveSetting();
 }
 
@@ -676,14 +708,14 @@ void MainWindow::on_comboBox_language_activated(int index)
 {
     qDebug() << "Switch language: " << index << Config::languages.at(index);
 
-    newSetting["language"] = Config::languages.at(index);
+    SettingModel::setting["language"] = Config::languages.at(index);
     beginSaveSetting();
     switchLanguage();
 }
 
 void MainWindow::switchLanguage()
 {
-    language = newSetting["language"].toString();
+    language = SettingModel::setting["language"].toString();
 
     Tools::switchLanguage(language);
     refreshUi();
@@ -730,13 +762,14 @@ void MainWindow::endSaveSetting()
 {
     delayedActions[keySaveSetting] = false;
 
-    if(newSetting == oldSetting){
+    if(SettingModel::setting == SettingModel::oldSetting){
         qDebug() << "新值与旧值相同，不保存";
         return;
     }
 
     SettingModel settingModel;
-    settingModel.save(newSetting);
+    settingModel.save(SettingModel::setting);
 
-    oldSetting = newSetting;
+    //oldSetting = newSetting;
+    SettingModel::oldSetting = SettingModel::setting;
 }

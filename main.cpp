@@ -44,7 +44,8 @@ int main(int argc, char *argv[])
 
     qDebug() << "语言：" << QLocale::system().name();
 
-    if(window.newSetting["autoStart"].toBool()){
+    //if(window.newSetting["autoStart"].toBool()){
+    if(SettingModel::setting["autoStart"].toBool()){
         window.on_pushButton_start_released();
     }
 

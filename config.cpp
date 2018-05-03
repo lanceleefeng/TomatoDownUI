@@ -53,15 +53,15 @@ QMap<QString, QVariant> Config::defaultSetting = {
 
     {"language", "en_us"},
     //{"language", "zh_cn"},
-    {"language", "zh_tw"},
+    //{"language", "zh_tw"},
 
     //{"autoStart", false},
     {"autoStart", true},
 
     {"countDown", true},
 
-    {"autoHide", false},
-    //{"autoHide", true},
+    //{"autoHide", false},
+    {"autoHide", true},
 
     //{"autoHideDelay", 300},
     //{"autoHideDelay", 600},

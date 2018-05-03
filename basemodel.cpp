@@ -6,7 +6,7 @@ int BaseModel::uid;
 
 bool BaseModel::isFullName = false;
 
-QString BaseModel::tablePrefix = "ts_";
+QString BaseModel::tablePrefix = "td_";
 
 
 QMap<QString, QString> BaseModel::fieldsMap;

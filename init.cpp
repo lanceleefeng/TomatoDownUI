@@ -19,7 +19,7 @@ Init::Init()
 
     //"YYYY-MM-DD HH:MM:SS.SSS"
     // sqlite 不支持表注释、字段注释
-    QString sqlCreateSettingsTable = "create table if not exists ts_settings("
+    QString sqlCreateSettingsTable = "create table if not exists td_settings("
         "id integer PRIMARY KEY AUTOINCREMENT,"
         "uid integer default 0,"
         "language text,"
@@ -37,7 +37,7 @@ Init::Init()
     }
 
 
-    QString sqlCreateTestTable = "create table if not exists ts_test("
+    QString sqlCreateTestTable = "create table if not exists td_test("
             "id integer PRIMARY KEY AUTOINCREMENT,"
             "uid integer default 0,"
             "test_auto_start integer default 1,"
