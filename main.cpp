@@ -10,6 +10,7 @@
 #include <QApplication>
 #include <QMessageBox>
 
+
 static int uid = 1;
 
 int main(int argc, char *argv[])
@@ -41,6 +42,7 @@ int main(int argc, char *argv[])
 
     MainWindow window;
     window.show();
+
 
     qDebug() << "语言：" << QLocale::system().name();
 

@@ -29,7 +29,7 @@ MainWindow::MainWindow(QWidget *parent)
     //newSetting = SettingModel::getSetting();
     //oldSetting = SettingModel::getSetting();
 
-    SettingModel::SettingModel::oldSetting = SettingModel::getSetting();
+    SettingModel::oldSetting = SettingModel::getSetting();
 
 
     int size = Config::languages.size();
@@ -57,16 +57,16 @@ MainWindow::MainWindow(QWidget *parent)
 
     setGeometry(geoX, 200, Config::width, Config::height);
 
-
-
-
     defaultTimerKey = Config::defaultTimerKey;
 
+    //ui->lineEdit_time->setText("25");
 
+    //ui->lineEdit_time->setText(SettingModel::setting["tomatoTime"]);
+    //ui->lineEdit_time->setText(QString("%1").arg(SettingModel::setting["tomatoTime"]));
 
-    ui->lineEdit_time->setText("25");
-    ui->lineEdit_tipTime->setText("3");
-    ui->lineEdit_breakTime->setText("5");
+    ui->lineEdit_time->setText(SettingModel::setting["tomatoTime"].toString());
+    ui->lineEdit_tipTime->setText(SettingModel::setting["tipTime"].toString());
+    ui->lineEdit_breakTime->setText(SettingModel::setting["breakTime"].toString());
 
 
     //QObject::connect(ui->lineEdit_time, &QLineEdit::returnPressed, );
@@ -103,6 +103,13 @@ MainWindow::MainWindow(QWidget *parent)
 
     initiated = true;
 
+    QHotkey *hotKeyStart = new QHotkey(QKeySequence("ctrl+shift+S"), true, this);
+    QHotkey *hotKeyBreak = new QHotkey(QKeySequence("ctrl+shift+B"), true, this);
+
+    qDebug() << "hot key register status: " << hotKeyStart->isRegistered();
+    QObject::connect(hotKeyStart, &QHotkey::activated, this, &MainWindow::on_pushButton_start_released);
+    //QObject::connect(hotKeyStart, &QHotkey::activated, &MainWindow::on_pushButton_start_released);
+    QObject::connect(hotKeyBreak, &QHotkey::activated, this, &MainWindow::on_pushButton_break_released);
 
 }
 
@@ -120,23 +127,29 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
     if(event->key() == Qt::Key_Return || event->key() == Qt::Key_Enter){
         //if(ui->lineEdit_breakTime->hasEditFocus()){
         if(ui->lineEdit_breakTime->hasFocus()){
-            on_pushButton_break_released();
+            breakStart();
         }else{
-            if(tickState == TickState::Init){
-                on_pushButton_start_released();
-            }else{
-                on_pushButton_restart_released();
-            }
+            tickStart();
+            //if(tickState == TickState::Init){
+            //    on_pushButton_start_released();
+            //}else{
+            //    on_pushButton_restart_released();
+            //}
         }
     }
 
 }
 
+void MainWindow::tickStart()
+{
+    if(tickState == TickState::Init){
+        doTickStart();
+    }else{
+        doTickRestart();
+    }
+}
 
-/**
- * 开始按钮
- */
-void MainWindow::on_pushButton_start_released()
+void MainWindow::doTickStart()
 {
 
     //tickState = TickState::Count;
@@ -160,12 +173,9 @@ void MainWindow::on_pushButton_start_released()
 
 }
 
-
-/**
- * 重新计时
- */
-void MainWindow::on_pushButton_restart_released()
+void MainWindow::doTickRestart()
 {
+
     qDebug() << "重新计时";
 
     setTickState(TickState::Count);
@@ -185,10 +195,7 @@ void MainWindow::on_pushButton_restart_released()
 
 }
 
-/**
- * 休息
- */
-void MainWindow::on_pushButton_break_released()
+void MainWindow::breakStart()
 {
 
     if(tickState == TickState::Count){
@@ -212,6 +219,31 @@ void MainWindow::on_pushButton_break_released()
     timer[defaultTimerKey]->start(1000);
     tick();
     tickHook();
+}
+
+/**
+ * 开始按钮
+ */
+void MainWindow::on_pushButton_start_released()
+{
+    tickStart();
+}
+
+
+/**
+ * 重新计时
+ */
+void MainWindow::on_pushButton_restart_released()
+{
+    tickStart();
+}
+
+/**
+ * 休息
+ */
+void MainWindow::on_pushButton_break_released()
+{
+    breakStart();
 }
 
 /**
@@ -741,6 +773,22 @@ void MainWindow::refreshUi()
 }
 
 
+void MainWindow::saveTime()
+{
+    SettingModel::setting["tomatoTime"] = ui->lineEdit_time->text();
+    SettingModel::setting["tipTime"] = ui->lineEdit_tipTime->text();
+    SettingModel::setting["breakTime"] = ui->lineEdit_breakTime->text();
+
+    qDebug() << "新值：";
+    Tools::pf(SettingModel::setting);
+
+    qDebug() << "旧值：";
+    Tools::pf(SettingModel::oldSetting);
+
+    beginSaveSetting();
+
+}
+
 /**
  *
  * 延时保存
@@ -772,4 +820,17 @@ void MainWindow::endSaveSetting()
 
     //oldSetting = newSetting;
     SettingModel::oldSetting = SettingModel::setting;
+}
+
+void MainWindow::on_lineEdit_time_textEdited(const QString &arg1)
+{
+    saveTime();
+}
+void MainWindow::on_lineEdit_tipTime_textEdited(const QString &arg1)
+{
+    saveTime();
+}
+void MainWindow::on_lineEdit_breakTime_textEdited(const QString &arg1)
+{
+    saveTime();
 }

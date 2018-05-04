@@ -26,6 +26,9 @@
 #include <QRect>
 
 
+#include <QHotkey>
+
+
 #include <QWinTaskbarButton>
 #include <QWinTaskbarProgress>
 
@@ -64,7 +67,7 @@ public:
     //QMap<QString, QVariant> oldSetting;
 
     void beginSaveSetting();
-
+    void saveTime();
 
     IconState iconState;
     TickState tickState;
@@ -94,20 +97,32 @@ public:
 
 protected:
 
+    void tickStart();
+
+    void doTickStart();
+    void doTickRestart();
+
+    void breakStart();
+
+
 public slots:
 
     void tick();
 
+
     void on_pushButton_start_released();
 
     //void on_lineEdit_time_returnPressed();
-    void on_lineEdit_tipTime_returnPressed();
-    void on_lineEdit_breakTime_returnPressed();
+    //void on_lineEdit_tipTime_returnPressed();
+    //void on_lineEdit_breakTime_returnPressed();
 
 private slots:
 
     // 也可以不用自动生成的slots，自定义slots名称，并在MainWindow::MainWindow中手动connect
 
+    void on_lineEdit_time_textEdited(const QString &arg1);
+    void on_lineEdit_tipTime_textEdited(const QString &arg1);
+    void on_lineEdit_breakTime_textEdited(const QString &arg1);
 
     void on_pushButton_restart_released();
     

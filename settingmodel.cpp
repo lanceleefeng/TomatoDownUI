@@ -21,6 +21,9 @@ QMap<QString, QString> SettingModel::fieldsMap = {
     {"auto_hide", "autoHide"},
     {"auto_hide_delay", "autoHideDelay"},
     {"first_run_hide", "firstRunHide"},
+    {"tomato_time", "tomatoTime"},
+    {"tip_time", "tipTime"},
+    {"break_time", "breakTime"},
 };
 
 

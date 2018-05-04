@@ -28,6 +28,9 @@ Init::Init()
         "auto_hide integer default 1,"
         "auto_hide_delay integer default 0,"
         "first_run_hide integer default 0,"
+        "tomato_time integer default 25,"
+        "tip_time integer default 3,"
+        "break_time integer default 5,"
         "created_at text,"
         "updated_at text"
         ")";

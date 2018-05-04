@@ -70,6 +70,9 @@ QMap<QString, QVariant> Config::defaultSetting = {
     {"autoHideDelay", 0},
     {"firstRunHide", false},
     //{"singleWindow", true},
+    {"tomatoTime", "25"},
+    {"tipTime", "3"},
+    {"breakTime", "5"},
 };
 
 

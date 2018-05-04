@@ -4,6 +4,8 @@
 #
 #-------------------------------------------------
 
+include(vendor/vendor.pri)
+
 QT       += core gui sql\
         winextras
 
