@@ -103,8 +103,8 @@ MainWindow::MainWindow(QWidget *parent)
 
     initiated = true;
 
-    QHotkey *hotKeyStart = new QHotkey(QKeySequence("ctrl+shift+S"), true, this);
-    QHotkey *hotKeyBreak = new QHotkey(QKeySequence("ctrl+shift+B"), true, this);
+    QHotkey *hotKeyStart = new QHotkey(QKeySequence(Config::hotKeys["tick"]), true, this);
+    QHotkey *hotKeyBreak = new QHotkey(QKeySequence(Config::hotKeys["break"]), true, this);
 
     qDebug() << "hot key register status: " << hotKeyStart->isRegistered();
     QObject::connect(hotKeyStart, &QHotkey::activated, this, &MainWindow::on_pushButton_start_released);

@@ -78,6 +78,12 @@ QMap<QString, QVariant> Config::defaultSetting = {
 
 QString Config::defaultTimerKey = "walking";
 
+// ctrl+shift+S 造成按键时切换输入法..
+QMap<QString, QString> Config::hotKeys = {
+    {"tick", "ctrl+alt+S"},
+    {"break", "ctrl+alt+Z"},
+};
+
 int Config::progressMinValue = 30;
 
 QMap<QString, int> Config::delayedTime = {

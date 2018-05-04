@@ -26,8 +26,10 @@ public:
 
     //static QString defaultLanguage;
     static QMap<QString, QVariant> defaultSetting;
-
     static QString defaultTimerKey;
+
+    static QMap<QString, QString> hotKeys;
+
 
     static int progressMinValue;
 
