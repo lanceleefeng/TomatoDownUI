@@ -6,6 +6,7 @@
 ![中文](./images_for_git/countdown-cn.png)
 ![英文](./images_for_git/countdown-en.png)
 
+_* 图片需要翻墙才能显示_
 
 ## 任务栏进度
 
@@ -23,6 +24,22 @@
 
 
 ![超时](./images_for_git/taskbar-icon-overtime.png)
+
+
+## 快捷键
+
+### 系统热键
+开始倒计时：Ctrl + Alt + S
+
+
+开始休息：Ctrl + Alt + Z
+
+### 普通快捷键
+
+开始倒计时：窗口为激活窗口 + Enter（“休息时间”输入框不获取焦点时）
+
+
+开始休息：“休息时间”输入框获取焦点 + Enter
 
 
 ## 开发环境
